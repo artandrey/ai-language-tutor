@@ -120,19 +120,41 @@ export const QuizContainer = () => {
               transition={{ delay: 0.3 }}
               className="mt-8"
             >
-              <Button
+              <motion.button
                 onClick={nextQuestion}
                 disabled={!canProceed()}
-                className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all duration-300 ${
+                className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
                   canProceed()
-                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white hover:scale-105'
+                    ? 'text-white shadow-lg'
                     : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                 }`}
+                style={{
+                  background: canProceed()
+                    ? 'linear-gradient(145deg, #3b82f6, #1d4ed8)'
+                    : undefined,
+                  boxShadow: canProceed()
+                    ? 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)'
+                    : undefined,
+                }}
+                whileTap={canProceed() ? { scale: 0.95 } : {}}
+                transition={{ duration: 0.1, ease: 'easeInOut' }}
               >
-                {currentQuestionIndex === questions.length - 1
-                  ? 'Complete'
-                  : 'Continue'}
-              </Button>
+                {/* Skeuomorphic inner shadow overlay */}
+                {canProceed() && (
+                  <div
+                    className="absolute inset-0 rounded-2xl"
+                    style={{
+                      background:
+                        'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
+                    }}
+                  />
+                )}
+                <span className="relative z-10">
+                  {currentQuestionIndex === questions.length - 1
+                    ? 'Complete'
+                    : 'Continue'}
+                </span>
+              </motion.button>
             </motion.div>
           </motion.div>
         </AnimatePresence>
