@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useAnimation } from 'motion/react';
 import { useQuizStore } from '@/store/quiz';
 import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
@@ -16,6 +16,8 @@ export const QuizContainer = () => {
     canProceed,
     isCompleted,
   } = useQuizStore();
+  // Controls for item visibility
+  const itemControls = useAnimation();
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -112,7 +114,13 @@ export const QuizContainer = () => {
               {currentQuestion.title}
             </motion.h2>
 
-            {renderQuestion()}
+            {/* Item container with no visible animation, controlled by Framer */}
+            <motion.div
+              animate={itemControls}
+              initial={{ opacity: 1 }}
+            >
+              {renderQuestion()}
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -121,7 +129,23 @@ export const QuizContainer = () => {
               className="mt-8"
             >
               <motion.button
-                onClick={nextQuestion}
+                onClick={async () => {
+                  if (!canProceed()) return;
+                  // Hide items immediately
+                  await itemControls.start({
+                    opacity: 0,
+                    transition: { duration: 0 },
+                  });
+                  // Delay 0.8s (no visible change)
+                  await itemControls.start({}, { duration: 0.8 });
+                  // Advance question
+                  nextQuestion();
+                  // Show new items instantly
+                  await itemControls.start({
+                    opacity: 1,
+                    transition: { duration: 0 },
+                  });
+                }}
                 disabled={!canProceed()}
                 className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
                   canProceed()
