@@ -29,9 +29,13 @@ export const SingleChoice = ({ questionId, options }: SingleChoiceProps) => {
                 ? 'bg-gradient-to-r from-blue-600/20 to-blue-500/20 border-2 border-blue-500 text-white'
                 : 'bg-gray-800/40 border-2 border-gray-700/50 text-gray-300 hover:bg-gray-700/40 hover:border-gray-600'
             }`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              delay: index * 0.1,
+              duration: 0.4,
+              ease: 'circInOut',
+            }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
