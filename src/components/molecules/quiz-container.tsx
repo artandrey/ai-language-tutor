@@ -26,7 +26,7 @@ export const QuizContainer = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900"
+        className="flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900"
       >
         <div className="max-w-md w-full text-center">
           <motion.div
@@ -46,7 +46,7 @@ export const QuizContainer = () => {
 
   if (!currentQuestion) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900">
+      <div className="h-full flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900">
         <div className="text-center text-white">
           <h2 className="text-2xl font-bold mb-4">No questions available</h2>
           <p className="text-gray-300">
@@ -81,7 +81,7 @@ export const QuizContainer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
+    <div className="h-full bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
       {/* Grainy gradient overlay */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-magenta-600/10" />
@@ -93,7 +93,7 @@ export const QuizContainer = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto p-4 pt-8">
+      <div className="flex flex-col h-full relative z-10 max-w-2xl mx-auto p-4 pt-8">
         <ProgressBar />
 
         <AnimatePresence mode="wait">
@@ -103,7 +103,7 @@ export const QuizContainer = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="bg-gray-900/40 backdrop-blur-sm rounded-3xl p-6 border border-gray-700/30"
+            className="flex flex-col grow bg-gray-900/40 backdrop-blur-sm rounded-3xl p-6 border border-gray-700/30"
           >
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -126,7 +126,7 @@ export const QuizContainer = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mt-8"
+              className="mt-auto"
             >
               <motion.button
                 onClick={async () => {
