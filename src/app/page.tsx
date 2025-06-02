@@ -15,7 +15,7 @@ const Home = () => {
             Welcome to your AI English Tutor!
           </h1>
           <p className="text-gray-300 mb-12 md:mb-14 text-base md:text-lg">
-            Let's personalize your learning journey in just a few quick
+            Let&apos;s personalize your learning journey in just a few quick
             questions.
             <br />
             This will help me create the perfect learning plan just for you!
