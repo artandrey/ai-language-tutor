@@ -76,7 +76,7 @@ export const QuizContainer = () => {
         />
       </div>
 
-      <div className="relative z-10 flex flex-col max-w-2xl mx-auto p-4 pt-8 h-full">
+      <div className="relative z-10 flex flex-col max-w-2xl mx-auto p-4 pt-4 h-full">
         <ProgressBar />
 
         <AnimatePresence mode="wait">

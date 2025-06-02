@@ -23,7 +23,7 @@ export const ProgressBar = ({ onBack }: ProgressBarProps) => {
   };
 
   return (
-    <div className="w-full flex items-center gap-4 mb-8">
+    <div className="w-full flex items-center gap-4 mb-2">
       <button
         onClick={handleBack}
         disabled={!canGoBack}
