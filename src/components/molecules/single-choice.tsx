@@ -36,8 +36,6 @@ export const SingleChoice = ({ questionId, options }: SingleChoiceProps) => {
               duration: 0.4,
               ease: 'circInOut',
             }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
           >
             <div className="flex items-center justify-between">
               <span className="font-medium">{option}</span>

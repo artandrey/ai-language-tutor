@@ -40,8 +40,6 @@ export const MultipleChoice = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: index * 0.1 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
           >
             <div className="flex items-center justify-between">
               <span className="font-medium">{option}</span>
