@@ -44,7 +44,7 @@ export const MultipleChoice = ({
             <div className="flex items-center justify-between">
               <span className="font-medium">{option}</span>
               <div
-                className={`grow shrink-0 ml-2 basis-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center ${
+                className={`grow-0 shrink-0 ml-2 basis-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center ${
                   isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-500'
                 }`}
               >
