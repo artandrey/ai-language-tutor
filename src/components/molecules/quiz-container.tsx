@@ -1,13 +1,13 @@
 'use client';
 
-import { motion, AnimatePresence, useAnimation } from 'motion/react';
 import { useQuizStore } from '@/store/quiz';
+import { AnimatePresence, motion, useAnimation } from 'motion/react';
+import { useRouter } from 'next/navigation';
+import { ScrollArea } from '../ui/scroll-area';
+import { Filler } from './filler';
+import { MultipleChoice } from './multiple-choice';
 import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
-import { MultipleChoice } from './multiple-choice';
-import { Filler } from './filler';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '../ui/scroll-area';
 
 export const QuizContainer = () => {
   const {
@@ -19,30 +19,12 @@ export const QuizContainer = () => {
   } = useQuizStore();
   // Controls for item visibility
   const itemControls = useAnimation();
+  const router = useRouter();
 
   const currentQuestion = questions[currentQuestionIndex];
 
   if (isCompleted) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900"
-      >
-        <div className="max-w-md w-full text-center">
-          <motion.div
-            initial={{ y: 20 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <h2 className="text-3xl font-bold text-white mb-4">
-              Quiz Completed!
-            </h2>
-            <p className="text-gray-300">Thank you for completing the quiz.</p>
-          </motion.div>
-        </div>
-      </motion.div>
-    );
+    return null;
   }
 
   if (!currentQuestion) {
@@ -144,8 +126,11 @@ export const QuizContainer = () => {
                     opacity: 0,
                     transition: { duration: 0.4 },
                   });
-                  // Advance question
-                  nextQuestion();
+                  if (currentQuestionIndex === questions.length - 1) {
+                    router.replace('/plan');
+                  } else {
+                    nextQuestion();
+                  }
                 }}
                 disabled={!canProceed()}
                 className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
@@ -164,7 +149,6 @@ export const QuizContainer = () => {
                 whileTap={canProceed() ? { scale: 0.95 } : {}}
                 transition={{ duration: 0.1, ease: 'easeInOut' }}
               >
-                {/* Skeuomorphic inner shadow overlay */}
                 {canProceed() && (
                   <div
                     className="absolute inset-0 rounded-2xl"
