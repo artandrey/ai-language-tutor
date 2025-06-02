@@ -88,7 +88,7 @@ export const QuizContainer = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 flex-1 flex flex-col"
           >
-            <div className="p-4 flex-1 flex flex-col">
+            <div className="pt-6 p-4 flex-1 flex flex-col">
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
