@@ -139,20 +139,13 @@ export const QuizContainer = () => {
               <motion.button
                 onClick={async () => {
                   if (!canProceed()) return;
-                  // Hide items immediately
+
                   await itemControls.start({
                     opacity: 0,
-                    transition: { duration: 0 },
+                    transition: { duration: 0.4 },
                   });
-                  // Delay 0.8s (no visible change)
-                  await itemControls.start({}, { duration: 0.8 });
                   // Advance question
                   nextQuestion();
-                  // Show new items instantly
-                  await itemControls.start({
-                    opacity: 1,
-                    transition: { duration: 0 },
-                  });
                 }}
                 disabled={!canProceed()}
                 className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
