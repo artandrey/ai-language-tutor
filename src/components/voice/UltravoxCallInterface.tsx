@@ -22,6 +22,10 @@ export default function UltravoxCallInterface({
     ultravoxSession!.joinCall(joinUrl);
   };
 
+  const endCall = () => {
+    ultravoxSession!.leaveCall();
+  };
+
   useEffect(() => {
     const session = new UltravoxSession();
     setUltravoxSession(session);
@@ -34,6 +38,7 @@ export default function UltravoxCallInterface({
       <p>Ultravox Call ID: {ultravoxCallId}</p>
       <p>Join URL: {joinUrl}</p>
       <button onClick={joinCall}>Join Call</button>
+      <button onClick={endCall}>End Call</button>
     </div>
   );
 }
