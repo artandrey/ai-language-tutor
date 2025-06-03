@@ -20,8 +20,5 @@ export function getDatabase() {
   return db;
 }
 
-// Export the database instance for server-side usage only
-export { db };
-
 // Export schema and types
 export * from './schema';
