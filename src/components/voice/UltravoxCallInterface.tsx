@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { UltravoxSession } from 'ultravox-client';
 
 interface UltravoxCallInterfaceProps {
@@ -9,15 +8,6 @@ interface UltravoxCallInterfaceProps {
   ultravoxCallId: string;
   joinUrl: string;
 }
-
-type CallStatus =
-  | 'disconnected'
-  | 'connecting'
-  | 'idle'
-  | 'listening'
-  | 'thinking'
-  | 'speaking'
-  | 'disconnecting';
 
 export default function UltravoxCallInterface({
   callId,
