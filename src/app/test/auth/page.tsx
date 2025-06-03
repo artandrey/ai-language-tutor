@@ -155,12 +155,14 @@ export default function AuthTestPage() {
               When you first visit this page, an anonymous session should be
               created automatically
             </li>
-            <li>Click "Test User Info" to verify user data is accessible</li>
             <li>
-              Click "Create New Anonymous Session" to test manual session
-              creation
+              Click &quot;Test User Info&quot; to verify user data is accessible
             </li>
-            <li>Click "Sign Out" to test the logout functionality</li>
+            <li>
+              Click &quot;Create New Anonymous Session&quot; to test manual
+              session creation
+            </li>
+            <li>Click &quot;Sign Out&quot; to test the logout functionality</li>
             <li>Refresh the page to test automatic session restoration</li>
           </ol>
         </div>

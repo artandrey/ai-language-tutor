@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
 import { getOrCreateCall, hasCompletedCalls } from '@/lib/calls/server';
 
@@ -97,7 +98,9 @@ export default async function VoicePage() {
                     How it works:
                   </h3>
                   <ol className="list-decimal list-inside space-y-2 text-gray-700">
-                    <li>Click "Join Voice Session" to start practicing</li>
+                    <li>
+                      Click &quot;Join Voice Session&quot; to start practicing
+                    </li>
                     <li>Have a natural conversation with the AI tutor</li>
                     <li>The AI will help you with grammar and vocabulary</li>
                     <li>Get personalized feedback after your session</li>
@@ -235,12 +238,12 @@ export default async function VoicePage() {
           <p className="text-gray-600 mb-6">
             We encountered an error while setting up your voice session.
           </p>
-          <a
+          <Link
             href="/"
             className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
           >
             Go Back Home
-          </a>
+          </Link>
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@supabase/supabase-js';
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 
 // Client-side Supabase client
 export const supabase = createClient(
@@ -73,7 +74,7 @@ export const getCurrentUser = async () => {
  * Listen to auth state changes
  */
 export const onAuthStateChange = (
-  callback: (event: string, session: any) => void
+  callback: (event: AuthChangeEvent, session: Session | null) => void
 ) => {
   return supabase.auth.onAuthStateChange(callback);
 };

@@ -8,7 +8,7 @@ export async function createAnonymousSession() {
   const supabase = await createClient();
 
   try {
-    const { data, error } = await supabase.auth.signInAnonymously();
+    const { error } = await supabase.auth.signInAnonymously();
 
     if (error) {
       console.error('Failed to create anonymous session:', error);

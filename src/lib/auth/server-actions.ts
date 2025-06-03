@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
-import { redirect } from 'next/navigation';
+import type { User } from '@supabase/supabase-js';
 
-export async function createAnonymousUser() {
+export async function createAnonymousUser(): Promise<User> {
   const supabase = await createClient();
 
   try {
@@ -12,6 +12,10 @@ export async function createAnonymousUser() {
       throw error;
     }
 
+    if (!data.user) {
+      throw new Error('No user returned from anonymous sign in');
+    }
+
     return data.user;
   } catch (error) {
     console.error('Error in createAnonymousUser:', error);
@@ -19,7 +23,7 @@ export async function createAnonymousUser() {
   }
 }
 
-export async function ensureUserExists() {
+export async function ensureUserExists(): Promise<User> {
   const supabase = await createClient();
 
   try {

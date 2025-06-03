@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function ErrorPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -29,19 +31,19 @@ export default function ErrorPage() {
           </p>
 
           <div className="space-y-4">
-            <a
+            <Link
               href="/auth/anonymous"
               className="block w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               Try Again
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/"
               className="block w-full bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
             >
               Go Home
-            </a>
+            </Link>
           </div>
 
           <div className="mt-6 text-center">

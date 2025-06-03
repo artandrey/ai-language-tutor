@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { createAnonymousSession } from '@/lib/auth/actions';
 
 export default function AnonymousAuthPage() {
@@ -27,7 +28,7 @@ export default function AnonymousAuthPage() {
             </h1>
 
             <p className="text-gray-600">
-              To get started, we'll create a temporary session for you to
+              To get started, we&apos;ll create a temporary session for you to
               practice English conversation.
             </p>
           </div>
@@ -38,7 +39,7 @@ export default function AnonymousAuthPage() {
                 What happens next:
               </h3>
               <ul className="text-blue-800 text-sm space-y-1">
-                <li>• We'll create a temporary anonymous session</li>
+                <li>• We&apos;ll create a temporary anonymous session</li>
                 <li>• No personal information required</li>
                 <li>• Start practicing immediately</li>
                 <li>• Your session will be saved temporarily</li>
@@ -54,12 +55,12 @@ export default function AnonymousAuthPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <a
+            <Link
               href="/"
               className="text-gray-500 hover:text-gray-700 text-sm"
             >
               ← Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>
