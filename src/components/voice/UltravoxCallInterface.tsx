@@ -18,6 +18,8 @@ export default function UltravoxCallInterface({
   console.log('ultravoxCallId', ultravoxCallId);
   const [ultravoxSession, setUltravoxSession] =
     useState<UltravoxSession | null>(null);
+  const [currentAgentTranscript, setCurrentAgentTranscript] = useState('');
+
   const joinCall = () => {
     ultravoxSession!.joinCall(joinUrl);
   };
@@ -29,6 +31,19 @@ export default function UltravoxCallInterface({
   useEffect(() => {
     const session = new UltravoxSession();
     setUltravoxSession(session);
+
+    const handleTranscripts = (event: any) => {
+      const transcripts = event.target.transcripts || [];
+      const last =
+        transcripts.length > 0 ? transcripts[transcripts.length - 1] : null;
+      if (last && last.speaker === 'agent') {
+        setCurrentAgentTranscript(last.text);
+      }
+    };
+    session.addEventListener('transcripts', handleTranscripts);
+    return () => {
+      session.removeEventListener('transcripts', handleTranscripts);
+    };
   }, []);
 
   return (
@@ -39,6 +54,12 @@ export default function UltravoxCallInterface({
       <p>Join URL: {joinUrl}</p>
       <button onClick={joinCall}>Join Call</button>
       <button onClick={endCall}>End Call</button>
+      <div
+        style={{ marginTop: '1em', padding: '0.5em', border: '1px solid #ccc' }}
+      >
+        <strong>Agent is saying:</strong>
+        <div>{currentAgentTranscript || <em>No agent message yet.</em>}</div>
+      </div>
     </div>
   );
 }
