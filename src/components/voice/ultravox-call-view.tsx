@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { UltravoxSession } from 'ultravox-client';
+import { useUltravoxCall } from '@/lib/ultravox/hooks/use-ultravox-call';
 import { TranscriptView } from './transcript-view';
 
 interface UltravoxCallInterfaceProps {
@@ -15,37 +14,8 @@ export default function UltravoxCallView({
   ultravoxCallId,
   joinUrl,
 }: UltravoxCallInterfaceProps) {
-  console.log('callId', callId);
-  console.log('ultravoxCallId', ultravoxCallId);
-  const [ultravoxSession, setUltravoxSession] =
-    useState<UltravoxSession | null>(null);
-  const [currentAgentTranscript, setCurrentAgentTranscript] = useState('');
-
-  const joinCall = () => {
-    ultravoxSession!.joinCall(joinUrl);
-  };
-
-  const endCall = () => {
-    ultravoxSession!.leaveCall();
-  };
-
-  useEffect(() => {
-    const session = new UltravoxSession();
-    setUltravoxSession(session);
-
-    const handleTranscripts = (event: any) => {
-      const transcripts = event.target.transcripts || [];
-      const last =
-        transcripts.length > 0 ? transcripts[transcripts.length - 1] : null;
-      if (last && last.speaker === 'agent') {
-        setCurrentAgentTranscript(last.text);
-      }
-    };
-    session.addEventListener('transcripts', handleTranscripts);
-    return () => {
-      session.removeEventListener('transcripts', handleTranscripts);
-    };
-  }, []);
+  const { currentAgentTranscript, joinCall, endCall } =
+    useUltravoxCall(joinUrl);
 
   return (
     <div>

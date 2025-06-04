@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/lib/hooks/useAuth';
+import { useAuth } from '@/lib/auth/hooks/use-auth';
 import { useState } from 'react';
 
 export default function AuthTestPage() {
