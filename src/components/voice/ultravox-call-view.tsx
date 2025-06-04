@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { UltravoxSession } from 'ultravox-client';
+import { TranscriptView } from './transcript-view';
 
 interface UltravoxCallInterfaceProps {
   callId: string;
@@ -9,7 +10,7 @@ interface UltravoxCallInterfaceProps {
   joinUrl: string;
 }
 
-export default function UltravoxCallInterface({
+export default function UltravoxCallView({
   callId,
   ultravoxCallId,
   joinUrl,
@@ -54,12 +55,7 @@ export default function UltravoxCallInterface({
       <p>Join URL: {joinUrl}</p>
       <button onClick={joinCall}>Join Call</button>
       <button onClick={endCall}>End Call</button>
-      <div
-        style={{ marginTop: '1em', padding: '0.5em', border: '1px solid #ccc' }}
-      >
-        <strong>Agent is saying:</strong>
-        <div>{currentAgentTranscript || <em>No agent message yet.</em>}</div>
-      </div>
+      <TranscriptView transcript={currentAgentTranscript} />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
 import { getOrCreateCall, hasCompletedCalls } from '@/lib/calls/server';
-import UltravoxCallInterface from '@/components/voice/UltravoxCallInterface';
+import UltravoxCallView from '@/components/voice/ultravox-call-view';
 
 export default async function VoicePage() {
   // Server-side authentication check
@@ -28,7 +28,7 @@ export default async function VoicePage() {
   return (
     <div>
       {callData.ultravoxCallId && (
-        <UltravoxCallInterface
+        <UltravoxCallView
           callId={callData.callId}
           ultravoxCallId={callData.ultravoxCallId}
           joinUrl={callData.joinUrl}
