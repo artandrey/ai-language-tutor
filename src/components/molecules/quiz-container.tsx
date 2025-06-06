@@ -2,7 +2,8 @@
 
 import { useQuizStore } from '@/store/quiz';
 import { AnimatePresence, motion, useAnimation } from 'motion/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
 import { Filler } from './filler';
 import { MultipleChoice } from './multiple-choice';
@@ -10,16 +11,19 @@ import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
 
 export const QuizContainer = () => {
-  const {
-    questions,
-    currentQuestionIndex,
-    nextQuestion,
-    canProceed,
-    isCompleted,
-  } = useQuizStore();
+  const { questions, canProceed, isCompleted, loadFromStorage } =
+    useQuizStore();
   // Controls for item visibility
   const itemControls = useAnimation();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const q = Number(searchParams.get('q') || 1);
+  const currentQuestionIndex = q - 1;
+
+  useEffect(() => {
+    loadFromStorage();
+    // eslint-disable-next-line
+  }, []);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -120,7 +124,7 @@ export const QuizContainer = () => {
             >
               <motion.button
                 onClick={async () => {
-                  if (!canProceed()) return;
+                  if (!canProceed(currentQuestion.id)) return;
 
                   await itemControls.start({
                     opacity: 0,
@@ -129,27 +133,27 @@ export const QuizContainer = () => {
                   if (currentQuestionIndex === questions.length - 1) {
                     router.replace('/email');
                   } else {
-                    nextQuestion();
+                    router.replace(`/quiz?q=${q + 1}`);
                   }
                 }}
-                disabled={!canProceed()}
+                disabled={!canProceed(currentQuestion.id)}
                 className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
-                  canProceed()
+                  canProceed(currentQuestion.id)
                     ? 'text-white shadow-lg'
                     : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                 }`}
                 style={{
-                  background: canProceed()
+                  background: canProceed(currentQuestion.id)
                     ? 'linear-gradient(145deg, #3b82f6, #1d4ed8)'
                     : undefined,
-                  boxShadow: canProceed()
+                  boxShadow: canProceed(currentQuestion.id)
                     ? 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)'
                     : undefined,
                 }}
-                whileTap={canProceed() ? { scale: 0.95 } : {}}
+                whileTap={canProceed(currentQuestion.id) ? { scale: 0.95 } : {}}
                 transition={{ duration: 0.1, ease: 'easeInOut' }}
               >
-                {canProceed() && (
+                {canProceed(currentQuestion.id) && (
                   <div
                     className="absolute inset-0 rounded-2xl"
                     style={{

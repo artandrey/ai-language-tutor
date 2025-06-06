@@ -17,48 +17,25 @@ export interface QuizAnswer {
 
 interface QuizState {
   questions: Question[];
-  currentQuestionIndex: number;
   answers: QuizAnswer[];
-  isCompleted: boolean;
-
-  // Actions
   setQuestions: (questions: Question[]) => void;
-  nextQuestion: () => void;
-  previousQuestion: () => void;
   setAnswer: (questionId: string, value: string | string[]) => void;
   getAnswer: (questionId: string) => QuizAnswer | undefined;
   resetQuiz: () => void;
-  canProceed: () => boolean;
+  canProceed: (questionId: string) => boolean;
+  loadFromStorage: () => void;
+  isCompleted: boolean;
 }
+
+const STORAGE_KEY = 'quiz-answers';
 
 export const useQuizStore = create<QuizState>((set, get) => ({
   questions: sampleQuestions,
-  currentQuestionIndex: 0,
   answers: [],
-  isCompleted: false,
 
-  setQuestions: (questions) =>
-    set({
-      questions,
-      currentQuestionIndex: 0,
-      answers: [],
-      isCompleted: false,
-    }),
-
-  nextQuestion: () => {
-    const { currentQuestionIndex, questions } = get();
-    if (currentQuestionIndex < questions.length - 1) {
-      set({ currentQuestionIndex: currentQuestionIndex + 1 });
-    } else {
-      set({ isCompleted: true });
-    }
-  },
-
-  previousQuestion: () => {
-    const { currentQuestionIndex } = get();
-    if (currentQuestionIndex > 0) {
-      set({ currentQuestionIndex: currentQuestionIndex - 1 });
-    }
+  setQuestions: (questions) => {
+    set({ questions, answers: [] });
+    localStorage.removeItem(STORAGE_KEY);
   },
 
   setAnswer: (questionId, value) => {
@@ -66,14 +43,15 @@ export const useQuizStore = create<QuizState>((set, get) => ({
     const existingAnswerIndex = answers.findIndex(
       (a) => a.questionId === questionId
     );
-
+    let newAnswers;
     if (existingAnswerIndex >= 0) {
-      const newAnswers = [...answers];
+      newAnswers = [...answers];
       newAnswers[existingAnswerIndex] = { questionId, value };
-      set({ answers: newAnswers });
     } else {
-      set({ answers: [...answers, { questionId, value }] });
+      newAnswers = [...answers, { questionId, value }];
     }
+    set({ answers: newAnswers });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newAnswers));
   },
 
   getAnswer: (questionId) => {
@@ -81,26 +59,34 @@ export const useQuizStore = create<QuizState>((set, get) => ({
     return answers.find((a) => a.questionId === questionId);
   },
 
-  resetQuiz: () =>
-    set({
-      currentQuestionIndex: 0,
-      answers: [],
-      isCompleted: false,
-    }),
+  resetQuiz: () => {
+    set({ answers: [] });
+    localStorage.removeItem(STORAGE_KEY);
+  },
 
-  canProceed: () => {
-    const { questions, currentQuestionIndex, answers } = get();
-    const currentQuestion = questions[currentQuestionIndex];
-
-    if (!currentQuestion?.required) return true;
-
-    const answer = answers.find((a) => a.questionId === currentQuestion.id);
+  canProceed: (questionId) => {
+    const { questions, answers } = get();
+    const question = questions.find((q) => q.id === questionId);
+    if (!question?.required) return true;
+    const answer = answers.find((a) => a.questionId === questionId);
     if (!answer) return false;
-
     if (Array.isArray(answer.value)) {
       return answer.value.length > 0;
     }
-
     return answer.value.trim().length > 0;
+  },
+
+  loadFromStorage: () => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      set({ answers: JSON.parse(stored) });
+    }
+  },
+
+  get isCompleted() {
+    const { questions, answers } = get();
+    return questions.every(
+      (q) => !q.required || answers.some((a) => a.questionId === q.id)
+    );
   },
 }));

@@ -1,23 +1,22 @@
 import { motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
-import { useQuizStore } from '@/store/quiz';
+import { useQuiz } from '@/hooks/useQuiz';
 
 interface ProgressBarProps {
   onBack?: () => void;
 }
 
 export const ProgressBar = ({ onBack }: ProgressBarProps) => {
-  const { currentQuestionIndex, questions, previousQuestion } = useQuizStore();
+  const { currentQuestionIndex, questions, canGoBack, goBack } = useQuiz();
 
   const progress =
     questions.length > 0
       ? ((currentQuestionIndex + 1) / questions.length) * 100
       : 0;
-  const canGoBack = currentQuestionIndex > 0;
 
   const handleBack = () => {
     if (canGoBack) {
-      previousQuestion();
+      goBack();
       onBack?.();
     }
   };
