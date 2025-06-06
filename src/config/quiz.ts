@@ -207,5 +207,6 @@ export const sampleQuestions: Question[] = [
       'Art & Creativity',
     ],
     required: true,
+    redirect: '/voice',
   },
 ];

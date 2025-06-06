@@ -130,8 +130,10 @@ export const QuizContainer = () => {
                     opacity: 0,
                     transition: { duration: 0.4 },
                   });
-                  if (currentQuestionIndex === questions.length - 1) {
-                    router.replace('/email');
+                  if (currentQuestion.redirect) {
+                    router.replace(currentQuestion.redirect);
+                  } else if (currentQuestionIndex === questions.length - 1) {
+                    router.replace('/');
                   } else {
                     router.replace(`/quiz?q=${q + 1}`);
                   }

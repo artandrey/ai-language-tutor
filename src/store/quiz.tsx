@@ -8,6 +8,7 @@ export interface Question {
   title: string;
   options?: string[];
   required?: boolean;
+  redirect?: string;
 }
 
 export interface QuizAnswer {
