@@ -39,6 +39,9 @@ export const calls = pgTable('calls', {
   agentId: text('agent_id'), // Ultravox agent ID
   ultravoxSessionId: text('ultravox_session_id').unique(),
   isActive: boolean('is_active').default(true),
+  isPostProcessingCompleted: boolean('is_post_processing_completed').default(
+    false
+  ),
 
   // Timestamps
   callStartedAt: timestamp('call_started_at'),

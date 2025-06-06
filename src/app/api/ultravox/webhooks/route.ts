@@ -1,20 +1,23 @@
 import { calls, getDatabase } from '@/lib/db';
 import { processGrammar, processVocabulary } from '@/lib/services/ai-processor';
 import { CallsService } from '@/lib/ultravox/client/sdk.gen';
+import { UltravoxV1Message } from '@/lib/ultravox/client/types.gen';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { NextRequest } from 'next/server';
 
 const ULTRAVOX_API_KEY = process.env.ULTRAVOX_API_KEY;
 
-async function fetchTranscript(callId: string) {
+async function fetchMessages(
+  callId: string
+): Promise<UltravoxV1Message[] | null> {
   const response = await CallsService.callsMessagesList({
     path: { call_id: callId },
     headers: { 'X-API-Key': ULTRAVOX_API_KEY! },
   });
   // The response is an AxiosResponse
   if (!response || !response.data || !response.data.results) return null;
-  return response.data.results.map((msg) => msg.text).join('\n');
+  return response.data.results;
 }
 
 export async function POST(request: NextRequest) {
@@ -35,7 +38,7 @@ export async function POST(request: NextRequest) {
 
   const event = data.event;
   const call = data.call;
-  const callId = call.callId;
+  const ultravoxCallId = call.callId;
   const db = getDatabase();
 
   if (event === 'call.started') {
@@ -44,11 +47,13 @@ export async function POST(request: NextRequest) {
       const existingCall = await db
         .select()
         .from(calls)
-        .where(eq(calls.ultravoxSessionId, callId))
+        .where(eq(calls.ultravoxSessionId, ultravoxCallId))
         .limit(1);
 
       if (existingCall.length > 0) {
-        console.log(`Call ${callId} already exists, updating status to active`);
+        console.log(
+          `Call ${ultravoxCallId} already exists, updating status to active`
+        );
         // Update existing call to ensure it's active
         await db
           .update(calls)
@@ -58,15 +63,15 @@ export async function POST(request: NextRequest) {
             callStartedAt: new Date(call.created),
             updatedAt: new Date(),
           })
-          .where(eq(calls.ultravoxSessionId, callId));
+          .where(eq(calls.ultravoxSessionId, ultravoxCallId));
       } else {
         console.log(`No existing call found, creating new call`);
         // Create new call
         await db.insert(calls).values({
-          id: callId,
+          id: ultravoxCallId,
           userId: call.userId ?? crypto.randomUUID(),
           agentId: call.firstSpeaker,
-          ultravoxSessionId: callId,
+          ultravoxSessionId: ultravoxCallId,
           callStartedAt: new Date(call.created),
           isActive: true,
           status: 'pending',
@@ -82,58 +87,101 @@ export async function POST(request: NextRequest) {
 
   if (event === 'call.ended') {
     try {
-      const transcript = await fetchTranscript(callId);
+      const messages = await fetchMessages(ultravoxCallId);
       let corrections = null;
       let vocabulary = null;
+      let transcriptForDb: string | null = null;
 
-      if (transcript && transcript.trim()) {
-        console.log(
-          `Processing transcript for call ${callId}, length: ${transcript.length}`
-        );
+      if (messages && messages.length > 0) {
+        const fullConversation = messages
+          .map((msg) => {
+            const role =
+              msg.role === 'MESSAGE_ROLE_USER'
+                ? 'User'
+                : msg.role === 'MESSAGE_ROLE_AGENT'
+                ? 'Agent'
+                : 'System';
+            return `${role}: ${msg.text}`;
+          })
+          .join('\n');
 
-        try {
-          // Process grammar corrections and vocabulary enhancements in parallel
-          const [grammarResult, vocabularyResult] = await Promise.all([
-            processGrammar(transcript).catch((error) => {
-              console.error('Grammar processing failed:', error);
-              return null; // Don't fail the whole request if grammar processing fails
-            }),
-            processVocabulary(transcript).catch((error) => {
-              console.error('Vocabulary processing failed:', error);
-              return null; // Don't fail the whole request if vocabulary processing fails
-            }),
-          ]);
+        const userTranscript = messages
+          .filter((msg) => msg.role === 'MESSAGE_ROLE_USER')
+          .map((msg) => msg.text)
+          .join('\n');
 
-          corrections = grammarResult;
-          vocabulary = vocabularyResult;
+        transcriptForDb = fullConversation;
 
-          console.log(`AI processing completed for call ${callId}:`, {
-            grammarCorrections: corrections?.corrections?.length || 0,
-            vocabularyWords: vocabulary?.vocabulary?.length || 0,
-          });
-        } catch (aiError) {
-          console.error('AI processing error:', aiError);
-          // Continue with saving the transcript even if AI processing fails
+        if (userTranscript && userTranscript.trim()) {
+          console.log(
+            `Processing transcript for call ${ultravoxCallId}, length: ${userTranscript.length}`
+          );
+
+          try {
+            // Process grammar corrections and vocabulary enhancements in parallel
+            const [grammarResult, vocabularyResult] = await Promise.all([
+              processGrammar(userTranscript, fullConversation).catch(
+                (error) => {
+                  console.error('Grammar processing failed:', error);
+                  return null; // Don't fail the whole request if grammar processing fails
+                }
+              ),
+              processVocabulary(userTranscript, fullConversation).catch(
+                (error) => {
+                  console.error('Vocabulary processing failed:', error);
+                  return null; // Don't fail the whole request if vocabulary processing fails
+                }
+              ),
+            ]);
+
+            corrections = grammarResult;
+            vocabulary = vocabularyResult;
+
+            console.log(`AI processing completed for call ${ultravoxCallId}:`, {
+              grammarCorrections: corrections?.corrections?.length || 0,
+              vocabularyWords: vocabulary?.vocabulary?.length || 0,
+            });
+          } catch (aiError) {
+            console.error('AI processing error:', aiError);
+            // Continue with saving the transcript even if AI processing fails
+          }
+        } else {
+          console.log(`No transcript found for call ${ultravoxCallId}`);
         }
-      } else {
-        console.log(`No transcript found for call ${callId}`);
+      }
+
+      const callData = data.call as {
+        created: string;
+        joined: string;
+        ended: string;
+      };
+
+      let duration: string | null = null;
+      if (callData.ended && callData.joined) {
+        const endedAt = new Date(callData.ended);
+        const joinedAt = new Date(callData.joined);
+        duration = Math.round(
+          (endedAt.getTime() - joinedAt.getTime()) / 1000
+        ).toString();
       }
 
       await db
         .update(calls)
         .set({
-          transcript,
+          transcript: transcriptForDb,
           corrections,
           vocabulary,
-          callEndedAt: new Date(call.ended),
+          duration,
+          isPostProcessingCompleted: true,
+          callEndedAt: new Date(callData.ended),
           isActive: false,
           status: 'completed',
           updatedAt: new Date(),
         })
-        .where(eq(calls.id, callId));
+        .where(eq(calls.ultravoxSessionId, ultravoxCallId));
 
       console.log(
-        `Successfully updated call ${callId} with processing results`
+        `Successfully updated call ${ultravoxCallId} with processing results`
       );
     } catch (err) {
       console.error('Error updating call:', err);
@@ -148,7 +196,7 @@ export async function POST(request: NextRequest) {
             isActive: false,
             updatedAt: new Date(),
           })
-          .where(eq(calls.id, callId));
+          .where(eq(calls.id, ultravoxCallId));
       } catch (updateError) {
         console.error('Failed to update call status to failed:', updateError);
       }

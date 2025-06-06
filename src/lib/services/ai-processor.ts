@@ -22,18 +22,41 @@ const VocabularyEnhancementSchema = z.object({
   ),
 });
 
-export async function processGrammar(transcript: string) {
-  const prompt = `Analyze the following transcript and identify grammar errors that need correction. For each error, provide:
-1. The actual text with the error
-2. The corrected version
-3. A brief explanation of the error (optional but helpful)
+export async function processGrammar(
+  userTranscript: string,
+  fullConversation: string
+) {
+  const prompt = `Analyze the user's speech from the following transcript and identify significant grammar errors.
 
-Focus on clear grammar mistakes like verb tense errors, subject-verb agreement, article usage, preposition errors, etc. Don't correct minor stylistic choices or regional variations.
+**Instructions:**
+1.  **Focus only on the user's sentences.** Do not correct the agent's speech.
+2.  **Identify clear grammatical mistakes** like verb tense, subject-verb agreement, and incorrect word usage.
+3.  **Do NOT correct simple punctuation** or capitalization unless it fundamentally changes the meaning of a sentence.
+4.  **Do NOT correct incomplete sentences or natural conversational pauses.** Ignore sentence fragments that are common in spoken language.
+5.  For each error, provide the 'actual' text and the 'corrected' version. In the 'actual' text, wrap the specific incorrect word(s) with '<wrong>' tags. In the 'corrected' text, wrap the replacement word(s) with '<corrected>' tags. Also, provide a brief 'explanation'.
 
-If no grammar errors are found, return an empty corrections array.
+**Example of a correction object:**
+{
+  "corrections": [
+    {
+      "actual": "I <wrong>does</wrong> not known",
+      "corrected": "I <corrected>did</corrected> not know",
+      "explanation": "The verb 'does' should be 'did' in the past tense."
+    }
+  ]
+}
 
-Transcript:
-${transcript}`;
+If no significant grammar errors are found, return an empty corrections array.
+
+**Full Conversation Context:**
+---
+${fullConversation}
+---
+
+**User's Speech to Analyze:**
+---
+${userTranscript}
+---`;
 
   const result = await generateObject({
     model: openai('gpt-4o'),
@@ -46,16 +69,27 @@ ${transcript}`;
   return result.object;
 }
 
-export async function processVocabulary(transcript: string) {
-  const prompt = `Analyze the following transcript and identify vocabulary words that could be enhanced with synonyms. For each word, provide:
-1. The actual word used in the transcript
-2. 2-3 synonyms that would be appropriate alternatives
-3. The CEFR difficulty level (A1, A2, B1, B2, C1, C2) of the original word
+export async function processVocabulary(
+  userTranscript: string,
+  fullConversation: string
+) {
+  const prompt = `Analyze the user's speech from the following transcript to identify vocabulary that could be enhanced.
 
-Focus on meaningful words (nouns, verbs, adjectives, adverbs) that have good synonym alternatives. Avoid function words like articles, prepositions, etc.
+**Instructions:**
+1.  **Focus primarily on adjectives.** These are the safest words to replace with synonyms without losing the user's intended meaning.
+2.  For each identified adjective, provide 2-3 synonyms that are contextually appropriate.
+3.  Avoid replacing nouns or verbs, especially if they are technical terms or specific to the conversation's context (e.g., "testing," "programming").
+4.  Provide the CEFR difficulty level (A1-C2) for the original word.
 
-Transcript:
-${transcript}`;
+**Full Conversation Context:**
+---
+${fullConversation}
+---
+
+**User's Speech to Analyze:**
+---
+${userTranscript}
+---`;
 
   const result = await generateObject({
     model: openai('gpt-4o'),
