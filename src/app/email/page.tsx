@@ -2,33 +2,18 @@ import { GradientBackground } from '@/components/ui/gradient-background';
 import { CenteredCard } from '@/components/ui/centered-card';
 import { Button } from '@/components/ui/button';
 
-const PlanPage = () => {
+const EmailPage = () => {
   return (
     <GradientBackground>
       <div className="flex flex-1 items-center justify-center min-h-screen">
         <CenteredCard className="p-12 md:p-16">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-10">
-            Your personalized learning plan is ready!
+            Enter your email address
           </h1>
           <p className="text-gray-300 mb-12 md:mb-14 text-base md:text-lg">
-            Enter your email address to receive your learning plan
+            Your information will be confidential and will not be shared with
           </p>
           <form className="flex flex-col gap-6">
-            <div className="text-left">
-              <label
-                htmlFor="name"
-                className="block text-gray-200 font-semibold mb-2"
-              >
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Enter your name"
-                className="w-full rounded-xl px-4 py-3 bg-gray-800/60 text-white placeholder-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                autoComplete="name"
-              />
-            </div>
             <div className="text-left">
               <label
                 htmlFor="email"
@@ -62,4 +47,4 @@ const PlanPage = () => {
   );
 };
 
-export default PlanPage;
+export default EmailPage;

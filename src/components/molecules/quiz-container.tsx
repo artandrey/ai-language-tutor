@@ -127,7 +127,7 @@ export const QuizContainer = () => {
                     transition: { duration: 0.4 },
                   });
                   if (currentQuestionIndex === questions.length - 1) {
-                    router.replace('/plan');
+                    router.replace('/email');
                   } else {
                     nextQuestion();
                   }
