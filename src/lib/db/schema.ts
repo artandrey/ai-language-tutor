@@ -26,7 +26,6 @@ export const calls = pgTable('calls', {
       actual: string;
       synonyms: string[];
       difficulty: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
-      definition?: string;
     }>;
   }>(),
 
