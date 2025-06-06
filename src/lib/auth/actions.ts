@@ -7,23 +7,15 @@ import { createClient } from '@/utils/supabase/server';
 export async function createAnonymousSession() {
   const supabase = await createClient();
 
-  try {
-    const { error } = await supabase.auth.signInAnonymously();
+  const { error } = await supabase.auth.signInAnonymously();
 
-    if (error) {
-      console.error('Failed to create anonymous session:', error);
-      redirect('/error');
-    }
-
-    // Revalidate the layout to update auth state
-    revalidatePath('/', 'layout');
-
-    // Redirect back to voice page with new session
-    redirect('/voice');
-  } catch (error) {
-    console.error('Error in createAnonymousSession:', error);
+  if (error) {
+    console.error('Failed to create anonymous session:', error);
     redirect('/error');
   }
+
+  // Redirect back to voice page with new session
+  redirect('/quiz');
 }
 
 export async function signOut() {
