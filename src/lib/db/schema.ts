@@ -50,6 +50,14 @@ export const calls = pgTable('calls', {
   updatedAt: timestamp('updated_at').defaultNow(),
 });
 
+export const userEmails = pgTable('user_emails', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull(),
+  email: text('email').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
 // Type exports for TypeScript
 export type Call = typeof calls.$inferSelect;
 export type NewCall = typeof calls.$inferInsert;
