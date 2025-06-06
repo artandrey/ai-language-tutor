@@ -28,6 +28,7 @@ export const calls = pgTable('calls', {
       difficulty: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
     }>;
   }>(),
+  joinUrl: text('join_url'),
 
   // Call metadata
   duration: text('duration'), // Duration in seconds

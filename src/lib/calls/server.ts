@@ -1,7 +1,8 @@
 import { getDatabase } from '@/lib/db';
 import { calls } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
-import { createUltravoxCall } from '@/lib/ultravox/server';
+import { AgentsService, CallsService } from '../ultravox/client';
+import { createUltravoxCall, getUltravoxCall } from '../ultravox/server';
 
 export interface CallCreationResult {
   callId: string;
@@ -53,16 +54,16 @@ export async function hasCompletedCalls(userId: string): Promise<boolean> {
 export async function createNewCall(
   userId: string
 ): Promise<{ callId: string; joinUrl: string; ultravoxCallId: string }> {
-  const ultravoxCall = await createUltravoxCall();
-
   const db = getDatabase();
+
+  const ultravoxCall = await createUltravoxCall();
 
   const newCall = await db
     .insert(calls)
     .values({
       userId,
+      joinUrl: ultravoxCall.joinUrl!,
       ultravoxSessionId: ultravoxCall.callId,
-      agentId: ultravoxCall.agentId,
       status: 'pending',
       isActive: true,
       createdAt: new Date(),
@@ -71,7 +72,7 @@ export async function createNewCall(
 
   return {
     callId: newCall[0].id,
-    joinUrl: ultravoxCall.joinUrl,
+    joinUrl: ultravoxCall.joinUrl!,
     ultravoxCallId: ultravoxCall.callId,
   };
 }
@@ -84,7 +85,7 @@ export async function getOrCreateCall(
   if (existingCall && existingCall.ultravoxSessionId) {
     return {
       callId: existingCall.id,
-      joinUrl: `https://call.ultravox.ai/${existingCall.ultravoxSessionId}`, // Reconstructed URL
+      joinUrl: existingCall.joinUrl!,
       isNewCall: false,
       ultravoxCallId: existingCall.ultravoxSessionId,
     };
