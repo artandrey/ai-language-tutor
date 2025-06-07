@@ -16,6 +16,7 @@ export interface Question {
   options?: Option[];
   required?: boolean;
   redirect?: string;
+  columns?: number;
 }
 
 export interface QuizAnswer {

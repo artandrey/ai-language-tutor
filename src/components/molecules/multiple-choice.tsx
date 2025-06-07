@@ -6,11 +6,13 @@ import { Option } from '@/store/quiz';
 interface MultipleChoiceProps {
   questionId: string;
   options: Option[];
+  columns?: number; // Optional, default 1
 }
 
 export const MultipleChoice = ({
   questionId,
   options,
+  columns = 1,
 }: MultipleChoiceProps) => {
   const { setAnswer, getAnswer } = useQuizStore();
   const currentAnswer = getAnswer(questionId);
@@ -24,7 +26,10 @@ export const MultipleChoice = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div
+      className="grid gap-4"
+      style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+    >
       {options.map((option, index) => {
         const isSelected = selectedValues.includes(option.value);
         return (

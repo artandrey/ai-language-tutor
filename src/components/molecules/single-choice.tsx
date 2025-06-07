@@ -5,9 +5,14 @@ import { Option } from '@/store/quiz';
 interface SingleChoiceProps {
   questionId: string;
   options: Option[];
+  columns?: number; // Optional, default 1
 }
 
-export const SingleChoice = ({ questionId, options }: SingleChoiceProps) => {
+export const SingleChoice = ({
+  questionId,
+  options,
+  columns = 1,
+}: SingleChoiceProps) => {
   const { setAnswer, getAnswer } = useQuizStore();
   const currentAnswer = getAnswer(questionId);
   const selectedValue = (currentAnswer?.value as string) || '';
@@ -17,7 +22,10 @@ export const SingleChoice = ({ questionId, options }: SingleChoiceProps) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div
+      className="grid gap-4"
+      style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+    >
       {options.map((option, index) => {
         const isSelected = selectedValue === option.value;
         return (

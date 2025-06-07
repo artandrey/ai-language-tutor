@@ -51,6 +51,7 @@ export const QuizContainer = () => {
           <SingleChoice
             questionId={currentQuestion.id}
             options={currentQuestion.options || []}
+            columns={currentQuestion.columns}
           />
         );
       case 'multiple':
@@ -58,6 +59,7 @@ export const QuizContainer = () => {
           <MultipleChoice
             questionId={currentQuestion.id}
             options={currentQuestion.options || []}
+            columns={currentQuestion.columns}
           />
         );
       case 'filler':
