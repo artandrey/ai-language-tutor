@@ -37,15 +37,15 @@ export const ProgressBar = ({ onBack }: ProgressBarProps) => {
           disabled={!canGoBack}
           className={`p-2 rounded-lg transition-all duration-200 ${
             canGoBack
-              ? 'text-white hover:bg-white/10 hover:scale-105'
-              : 'text-gray-500 cursor-not-allowed'
+              ? 'text-gray-700 hover:bg-gray-100 hover:scale-105'
+              : 'text-gray-400 cursor-not-allowed'
           }`}
         >
           <ArrowLeft size={24} />
         </button>
       )}
 
-      <div className="flex-1 bg-gray-800/50 rounded-full h-2 overflow-hidden backdrop-blur-sm">
+      <div className="flex-1 bg-gray-200/50 rounded-full h-2 overflow-hidden backdrop-blur-sm">
         <motion.div
           className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
           initial={{ width: 0 }}
@@ -54,7 +54,7 @@ export const ProgressBar = ({ onBack }: ProgressBarProps) => {
         />
       </div>
 
-      <span className="text-sm text-gray-400 min-w-[3rem]">
+      <span className="text-sm text-gray-500 min-w-[3rem]">
         {currentQuestionIndex + 1}/{questions.length}
       </span>
     </div>

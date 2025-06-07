@@ -11,14 +11,14 @@ export default function VoiceResultsPage() {
   // Handle error states
   if (error) {
     return (
-      <div className="h-full bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
-        {/* Grainy gradient overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-magenta-600/10" />
+      <div className="h-full bg-gradient-to-br from-blue-100 to-white relative overflow-hidden">
+        {/* Light gradient overlay */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 to-blue-50/10" />
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E")`,
             }}
           />
         </div>
@@ -29,7 +29,7 @@ export default function VoiceResultsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 p-8 text-center"
+              className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200/50 p-8 text-center shadow-lg"
             >
               <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg
@@ -46,10 +46,10 @@ export default function VoiceResultsPage() {
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Oops! Something went wrong
               </h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-600 mb-6">
                 We couldn't load your call results. Please try again.
               </p>
               <motion.a
@@ -82,14 +82,14 @@ export default function VoiceResultsPage() {
   // Handle call not found
   if (call && call.error) {
     return (
-      <div className="h-full bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
-        {/* Grainy gradient overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-magenta-600/10" />
+      <div className="h-full bg-gradient-to-br from-blue-100 to-white relative overflow-hidden">
+        {/* Light gradient overlay */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 to-blue-50/10" />
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E")`,
             }}
           />
         </div>
@@ -100,7 +100,7 @@ export default function VoiceResultsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 p-8 text-center"
+              className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200/50 p-8 text-center shadow-lg"
             >
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg
@@ -117,10 +117,10 @@ export default function VoiceResultsPage() {
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 No Calls Found
               </h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-600 mb-6">
                 You haven't completed any calls yet. Start a new session to get
                 personalized feedback!
               </p>

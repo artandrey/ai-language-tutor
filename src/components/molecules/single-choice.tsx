@@ -34,8 +34,8 @@ export const SingleChoice = ({
             onClick={() => handleSelect(option)}
             className={`w-full p-4 rounded-2xl text-left transition-all duration-200 ${
               isSelected
-                ? 'bg-gradient-to-r from-blue-600/20 to-blue-500/20 border-2 border-blue-500 text-white'
-                : 'bg-gray-800/40 border-2 border-gray-700/50 text-gray-300 hover:bg-gray-700/40 hover:border-gray-600'
+                ? 'bg-gradient-to-r from-blue-100 to-blue-50 border-2 border-blue-500 text-gray-900'
+                : 'bg-gray-100/60 border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300'
             }`}
             initial={{ opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -49,7 +49,7 @@ export const SingleChoice = ({
               <span className="font-medium">{option.label}</span>
               <div
                 className={`grow-0 shrink-0 ml-2 basis-5 h-5 rounded-full border-2 transition-all duration-200 ${
-                  isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-500'
+                  isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-400'
                 }`}
               >
                 {isSelected && (

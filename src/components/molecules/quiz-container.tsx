@@ -29,10 +29,12 @@ export const QuizContainer = () => {
 
   if (!currentQuestion) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900">
-        <div className="text-center text-white">
-          <h2 className="text-2xl font-bold mb-4">No questions available</h2>
-          <p className="text-gray-300">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-100 to-white">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">
+            No questions available
+          </h2>
+          <p className="text-gray-600">
             Please add questions to start the quiz.
           </p>
         </div>
@@ -70,14 +72,14 @@ export const QuizContainer = () => {
   };
 
   return (
-    <div className="h-full bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
-      {/* Grainy gradient overlay */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-magenta-600/10" />
+    <div className="h-full bg-gradient-to-br from-blue-100 to-white relative overflow-hidden">
+      {/* Light gradient overlay */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 to-blue-50/10" />
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E")`,
           }}
         />
       </div>
@@ -92,14 +94,14 @@ export const QuizContainer = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 flex-1 flex flex-col"
+            className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200/50 flex-1 flex flex-col shadow-lg"
           >
             <div className="pt-6 p-4 flex-1 flex flex-col">
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-xl font-bold text-white mb-8 leading-tight"
+                className="text-xl font-bold text-gray-900 mb-8 leading-tight"
               >
                 {currentQuestion.title}
               </motion.h2>
@@ -145,7 +147,7 @@ export const QuizContainer = () => {
                   className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
                     canProceed(currentQuestion.id)
                       ? 'text-white shadow-lg'
-                      : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                   style={{
                     background: canProceed(currentQuestion.id)

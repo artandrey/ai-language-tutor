@@ -18,14 +18,14 @@ export function ProcessingLoader() {
   }, []);
 
   return (
-    <div className="h-full bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
-      {/* Grainy gradient overlay */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-magenta-600/10" />
+    <div className="h-full bg-gradient-to-br from-blue-100 to-white relative overflow-hidden">
+      {/* Light gradient overlay */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 to-blue-50/10" />
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E")`,
           }}
         />
       </div>
@@ -36,7 +36,7 @@ export function ProcessingLoader() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 p-8 text-center w-full max-w-md"
+            className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200/50 p-8 text-center w-full max-w-md shadow-lg"
           >
             {/* Animated Icon */}
             <motion.div
@@ -47,7 +47,7 @@ export function ProcessingLoader() {
             >
               <div className="w-16 h-16 mx-auto mb-6 relative">
                 {/* Inner icon */}
-                <div className="relative w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                <div className="relative w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
                   <svg
                     className="w-8 h-8 text-white"
                     fill="none"
@@ -72,12 +72,13 @@ export function ProcessingLoader() {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="space-y-4 mb-8"
             >
-              <h1 className="text-3xl font-bold text-white">
+              <h1 className="text-3xl font-bold text-gray-900">
                 Analyzing your conversation...
               </h1>
-              <p className="text-gray-300 text-lg">
-                Swiftly AI is processing your speech patterns, grammar, and
-                vocabulary to provide personalized feedback.
+              <p className="text-gray-600 text-lg">
+                <span className="text-blue-600 font-semibold">Swiftly AI</span>{' '}
+                is processing your speech patterns, grammar, and vocabulary to
+                provide personalized feedback.
               </p>
             </motion.div>
 
@@ -88,11 +89,11 @@ export function ProcessingLoader() {
               transition={{ delay: 0.6, duration: 0.5 }}
               className="w-full"
             >
-              <div className="flex items-center justify-between text-sm text-gray-400 mb-3">
+              <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
                 <span>Processing...</span>
                 <span>{Math.round(progress)}%</span>
               </div>
-              <div className="w-full bg-gray-800/50 rounded-full h-3 backdrop-blur-sm overflow-hidden">
+              <div className="w-full bg-gray-200/50 rounded-full h-3 backdrop-blur-sm overflow-hidden">
                 <motion.div
                   className="bg-gradient-to-r from-blue-500 to-blue-400 h-3 rounded-full"
                   initial={{ width: 0 }}
@@ -100,7 +101,7 @@ export function ProcessingLoader() {
                   transition={{ duration: 0.3, ease: 'easeOut' }}
                 />
               </div>
-              <p className="text-gray-400 text-sm mt-3">
+              <p className="text-gray-500 text-sm mt-3">
                 This usually takes 10-30 seconds
               </p>
             </motion.div>

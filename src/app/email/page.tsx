@@ -18,10 +18,10 @@ export default async function EmailPage() {
     <GradientBackground>
       <div className="flex flex-1 items-center justify-center min-h-screen">
         <CenteredCard className="p-12 md:p-16">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-8 md:mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-10">
             Enter your email address
           </h1>
-          <p className="text-gray-300 mb-12 md:mb-14 text-base md:text-lg">
+          <p className="text-gray-600 mb-12 md:mb-14 text-base md:text-lg">
             Your information will be confidential and will not be shared with
           </p>
           <EmailForm />

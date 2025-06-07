@@ -8,7 +8,7 @@ export const CenteredCard = ({
   className?: string;
 }) => (
   <div
-    className={`max-w-md w-full mx-auto text-center bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 p-8 shadow-lg ${className}`}
+    className={`max-w-md w-full mx-auto text-center bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-200/50 p-8 shadow-lg ${className}`}
   >
     {children}
   </div>
