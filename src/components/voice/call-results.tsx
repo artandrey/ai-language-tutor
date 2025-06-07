@@ -481,7 +481,7 @@ export function CallResults({ call }: CallResultsProps) {
                           }}
                           whileTap={{ scale: 0.95 }}
                           transition={{ duration: 0.1, ease: 'easeInOut' }}
-                          onClick={() => router.push('/payment')}
+                          onClick={() => router.push('/payment?type=voice')}
                         >
                           <div
                             className="absolute inset-0 rounded-2xl"
@@ -490,7 +490,9 @@ export function CallResults({ call }: CallResultsProps) {
                                 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
                             }}
                           />
-                          <span className="relative z-10">Continue</span>
+                          <span className="relative z-10">
+                            Get my personal plan
+                          </span>
                         </motion.button>
                       </div>
                     </motion.div>

@@ -3,7 +3,6 @@
 import { useQuizStore } from '@/store/quiz';
 import { AnimatePresence, motion, useAnimation } from 'motion/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
 import { Filler } from './filler';
 import { MultipleChoice } from './multiple-choice';
@@ -11,19 +10,13 @@ import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
 
 export const QuizContainer = () => {
-  const { questions, canProceed, isCompleted, loadFromStorage } =
-    useQuizStore();
+  const { questions, canProceed, isCompleted } = useQuizStore();
   // Controls for item visibility
   const itemControls = useAnimation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const q = Number(searchParams.get('q') || 1);
   const currentQuestionIndex = q - 1;
-
-  useEffect(() => {
-    loadFromStorage();
-    // eslint-disable-next-line
-  }, []);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -138,7 +131,7 @@ export const QuizContainer = () => {
                     if (currentQuestion.redirect) {
                       router.replace(currentQuestion.redirect);
                     } else if (currentQuestionIndex === questions.length - 1) {
-                      router.replace('/plan');
+                      router.replace('/payment?type=test');
                     } else {
                       router.replace(`/quiz?q=${q + 1}`);
                     }
@@ -173,7 +166,7 @@ export const QuizContainer = () => {
                   )}
                   <span className="relative z-10">
                     {currentQuestionIndex === questions.length - 1
-                      ? 'Complete'
+                      ? 'Get my personal plan'
                       : 'Continue'}
                   </span>
                 </motion.button>

@@ -35,7 +35,6 @@ interface QuizState {
   getAnswer: (questionId: string) => QuizAnswer | undefined;
   resetQuiz: () => void;
   canProceed: (questionId: string) => boolean;
-  loadFromStorage: () => void;
   isCompleted: boolean;
 }
 
@@ -86,13 +85,6 @@ export const useQuizStore = create<QuizState>((set, get) => ({
       return answer.value.length > 0;
     }
     return answer.value.trim().length > 0;
-  },
-
-  loadFromStorage: () => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      set({ answers: JSON.parse(stored) });
-    }
   },
 
   get isCompleted() {
