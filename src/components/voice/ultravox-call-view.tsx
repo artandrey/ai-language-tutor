@@ -249,14 +249,7 @@ export default function UltravoxCallView({
               <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
               <div className="min-h-[16px] flex-1">
                 {currentAgentTranscript && (
-                  <p
-                    className="text-gray-800 text-sm leading-tight overflow-hidden"
-                    style={{
-                      display: '-webkit-box',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                    }}
-                  >
+                  <p className="text-gray-800 text-sm leading-tight overflow-hidden">
                     {currentAgentTranscript}
                   </p>
                 )}
