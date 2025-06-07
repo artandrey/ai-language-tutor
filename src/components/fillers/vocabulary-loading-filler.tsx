@@ -73,13 +73,12 @@ export function VocabularyLoadingFiller() {
       </div>
       <div className="bg-white/60 border border-gray-200/50 rounded-2xl p-4 mt-8 w-full max-w-xl mx-auto shadow-sm">
         <div className="text-gray-700 mb-2">
-          Your product is freaking amazing! I finally found something perfect
-          for me to enhance my advanced English to the next level. Stellar work
-          to you all!
+          This app made learning new words feel effortless and even fun. I
+          noticed my vocabulary growing every day without stress or boredom.
         </div>
         <div className="flex items-center justify-between text-gray-500 text-xs">
           <div>
-            <div>Maria Olimova</div>
+            <div>Jake Johnson</div>
             <div>Product manager</div>
           </div>
           <div className="flex gap-0.5 text-blue-500 text-lg">{'★★★★★'}</div>
