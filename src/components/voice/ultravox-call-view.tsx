@@ -9,6 +9,7 @@ import { Captions, PhoneOff, Mic, Loader2 } from 'lucide-react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import posthog from 'posthog-js';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 
 interface UltravoxCallInterfaceProps {
   callId: string;
@@ -31,7 +32,7 @@ export default function UltravoxCallView({
 
   // End call when countdown completes
   const handleCountdownComplete = async () => {
-    posthog.capture('user_ended_conversation_by_timeout');
+    posthog.capture(AnalyticsEvents.USER_ENDED_CONVERSATION_BY_TIMEOUT);
     setCountdownComplete(true);
     setCallEnded(true);
     await wait(2000);
@@ -40,7 +41,7 @@ export default function UltravoxCallView({
 
   // End call when hang up is pressed
   const handleEndCall = async () => {
-    posthog.capture('user_ended_conversation_by_user');
+    posthog.capture(AnalyticsEvents.USER_ENDED_CONVERSATION_BY_THEMSELF);
     setCallEnded(true);
     endCall();
     await wait(2000);
@@ -55,7 +56,7 @@ export default function UltravoxCallView({
   // Handle start call with loading state
   const handleStartCall = async () => {
     setIsStartingCall(true);
-    posthog.capture('user_started_conversation');
+    posthog.capture(AnalyticsEvents.USER_STARTED_CONVERSATION);
     try {
       await joinCall();
     } finally {

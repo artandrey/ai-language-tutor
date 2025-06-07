@@ -6,13 +6,14 @@ import {
   LEVELS,
   LEVEL_COLORS,
 } from '@/utils/vocabularyStats';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 
 export function VocabularyStatsSummary() {
   const { answers, questions } = useQuizStore();
   const stats = getVocabularyStats(answers, questions);
 
   useEffect(() => {
-    posthog.capture('user_passed_language_test');
+    posthog.capture(AnalyticsEvents.USER_PASSED_LANGUAGE_TEST);
   }, []);
 
   return (

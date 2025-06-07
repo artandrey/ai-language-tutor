@@ -11,6 +11,7 @@ import { SingleChoice } from './single-choice';
 import posthog from 'posthog-js';
 import { useEffect } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 
 export const QuizContainer = () => {
   const { questions, canProceed, isCompleted } = useQuizStore();
@@ -24,8 +25,15 @@ export const QuizContainer = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   useEffect(() => {
-    posthog.capture('user_started_quiz');
+    posthog.capture(AnalyticsEvents.QUIZ_STARTED);
   }, []);
+
+  // Fire user_started_test event when reaching question 15 (vocabulary test)
+  useEffect(() => {
+    if (currentQuestion?.id === '15') {
+      posthog.capture(AnalyticsEvents.USER_STARTED_TEST);
+    }
+  }, [currentQuestion?.id]);
 
   if (!currentQuestion) {
     return (

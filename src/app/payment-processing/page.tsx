@@ -4,12 +4,13 @@ import React, { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Loader } from '@/components/ui/loader';
 import posthog from 'posthog-js';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 
 function PaymentProcessingContent() {
   const searchParams = useSearchParams();
   const plan = searchParams.get('plan');
   useEffect(() => {
-    posthog.capture('user_initialized_payment', { plan });
+    posthog.capture(AnalyticsEvents.USER_INITIALIZED_PAYMENT, { plan });
   }, [plan]);
 
   return (

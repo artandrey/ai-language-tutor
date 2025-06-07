@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import posthog from 'posthog-js';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 
 interface VoiceMetricsSummaryProps {
   call: {
@@ -32,7 +33,7 @@ function formatDuration(seconds: number | null) {
 
 export function VoiceMetricsSummary({ call }: VoiceMetricsSummaryProps) {
   useEffect(() => {
-    posthog.capture('user_viewed_voice_summary');
+    posthog.capture(AnalyticsEvents.USER_VIEWED_VOICE_SUMMARY);
   }, []);
 
   return (

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 import posthog from 'posthog-js';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 
 const plans = [
   { name: '1-Week Plan', price: 9.99, perDay: '1.43', original: null },
@@ -35,7 +36,7 @@ function PaymentContent() {
   } = useCallPolling();
 
   useEffect(() => {
-    posthog.capture('user_opened_payment_page', { type });
+    posthog.capture(AnalyticsEvents.USER_OPENED_PAYMENT_PAGE, { type });
   }, [type]);
 
   return (

@@ -7,6 +7,7 @@ import { usePostHog } from 'posthog-js/react';
 
 import posthog from 'posthog-js';
 import { PostHogProvider as PHProvider } from 'posthog-js/react';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -39,7 +40,7 @@ function PostHogPageView() {
         url = url + '?' + searchParams.toString();
       }
 
-      posthog.capture('$pageview', { $current_url: url });
+      posthog.capture(AnalyticsEvents.PAGEVIEW, { $current_url: url });
     }
   }, [pathname, searchParams, posthog]);
 
