@@ -34,7 +34,7 @@ export default function PaymentPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4">
-      <div className="w-full max-w-2xl mx-auto">
+      <div className="w-full max-w-xl mx-auto">
         {/* Metrics summary */}
         {type === 'voice' && !isVoiceLoading && call && !voiceError && (
           <div className="mb-8">
@@ -125,7 +125,13 @@ export default function PaymentPage() {
             </div>
             <button
               className="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white font-bold text-lg shadow-lg hover:from-blue-600 hover:to-blue-500 transition"
-              onClick={() => router.push('/payment-processing')}
+              onClick={() =>
+                router.push(
+                  `/payment-processing?plan=${encodeURIComponent(
+                    plans[selected].name
+                  )}`
+                )
+              }
             >
               Get My Plan
             </button>
