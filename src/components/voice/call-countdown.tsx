@@ -57,8 +57,17 @@ export const CallCountdown: React.FC<CallCountdownProps> = ({
     .toString()
     .padStart(2, '0')}`;
 
-  const circleRadius = size / 2 - 6;
+  // Increase the offset to create more space between ring and text
+  const circleRadius = size / 2 - 12;
   const circleCircumference = 2 * Math.PI * circleRadius;
+
+  // Calculate text size based on timer size for better proportions
+  const getTextSize = (timerSize: number) => {
+    if (timerSize <= 80) return 'text-lg';
+    if (timerSize <= 100) return 'text-xl';
+    if (timerSize <= 120) return 'text-2xl';
+    return 'text-3xl';
+  };
 
   return (
     <div
@@ -74,7 +83,7 @@ export const CallCountdown: React.FC<CallCountdownProps> = ({
           cy={size / 2}
           r={circleRadius}
           stroke="#23263a"
-          strokeWidth={12}
+          strokeWidth={8}
           fill="none"
         />
         <motion.circle
@@ -82,7 +91,7 @@ export const CallCountdown: React.FC<CallCountdownProps> = ({
           cy={size / 2}
           r={circleRadius}
           stroke="#3b82f6"
-          strokeWidth={12}
+          strokeWidth={8}
           fill="none"
           strokeDasharray={circleCircumference}
           strokeDashoffset={circleCircumference * (1 - displayProgress)}
@@ -90,7 +99,7 @@ export const CallCountdown: React.FC<CallCountdownProps> = ({
         />
       </svg>
       <span
-        className="text-3xl font-bold text-blue-500 z-10"
+        className={`${getTextSize(size)} font-bold text-blue-500 z-10`}
         style={{ fontVariantNumeric: 'tabular-nums' }}
       >
         {timeString}
