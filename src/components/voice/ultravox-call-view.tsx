@@ -244,12 +244,12 @@ export default function UltravoxCallView({
       {/* Compact Transcript - Fixed at top when enabled */}
       {showSubtitles && (
         <div className="fixed top-16 left-3 right-3 z-10">
-          <div className="bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-200/50 max-h-20 overflow-hidden">
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-200/50 overflow-hidden">
             <div className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
               <div className="min-h-[16px] flex-1">
                 {currentAgentTranscript && (
-                  <p className="text-gray-800 text-sm leading-tight overflow-hidden">
+                  <p className="text-gray-800 text-sm">
                     {currentAgentTranscript}
                   </p>
                 )}
