@@ -34,6 +34,7 @@ interface CallResultsProps {
 export function CallResults({ call }: CallResultsProps) {
   const [currentStage, setCurrentStage] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -460,7 +461,11 @@ export function CallResults({ call }: CallResultsProps) {
                           }}
                           whileTap={{ scale: 0.95 }}
                           transition={{ duration: 0.1, ease: 'easeInOut' }}
-                          onClick={() => router.replace('/payment?type=voice')}
+                          disabled={isNavigating}
+                          onClick={async () => {
+                            setIsNavigating(true);
+                            router.replace('/payment?type=voice');
+                          }}
                         >
                           <div
                             className="absolute inset-0 rounded-2xl"
@@ -470,8 +475,17 @@ export function CallResults({ call }: CallResultsProps) {
                             }}
                           />
                           <span className="relative z-10 flex items-center justify-center gap-2">
-                            <Sparkles size={20} />
-                            Unlock Full Learning Experience
+                            {isNavigating ? (
+                              <>
+                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                Loading...
+                              </>
+                            ) : (
+                              <>
+                                <Sparkles size={20} />
+                                Unlock Full Learning Experience
+                              </>
+                            )}
                           </span>
                         </motion.button>
                       </div>

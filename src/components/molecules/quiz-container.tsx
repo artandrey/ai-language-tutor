@@ -9,7 +9,7 @@ import { MultipleChoice } from './multiple-choice';
 import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
 import posthog from 'posthog-js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { AnalyticsEvents } from '@/lib/analytics/events';
 
@@ -21,6 +21,7 @@ export const QuizContainer = () => {
   const searchParams = useSearchParams();
   const q = Number(searchParams.get('q') || 1);
   const currentQuestionIndex = q - 1;
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -143,40 +144,52 @@ export const QuizContainer = () => {
               >
                 <motion.button
                   onClick={async () => {
-                    if (!canProceed(currentQuestion.id)) return;
+                    if (!canProceed(currentQuestion.id) || isNavigating) return;
 
-                    await itemControls.start({
-                      opacity: 0,
-                      transition: { duration: 0.4 },
-                    });
-                    if (currentQuestion.redirect) {
-                      router.replace(currentQuestion.redirect);
-                    } else if (currentQuestionIndex === questions.length - 1) {
-                      router.replace('/payment?type=test');
-                    } else {
-                      router.replace(`/quiz?q=${q + 1}`);
+                    setIsNavigating(true);
+                    try {
+                      await itemControls.start({
+                        opacity: 0,
+                        transition: { duration: 0.4 },
+                      });
+                      if (currentQuestion.redirect) {
+                        router.replace(currentQuestion.redirect);
+                      } else if (
+                        currentQuestionIndex ===
+                        questions.length - 1
+                      ) {
+                        router.replace('/payment?type=test');
+                      } else {
+                        router.replace(`/quiz?q=${q + 1}`);
+                      }
+                    } finally {
+                      // Don't reset loading state immediately as navigation will happen
                     }
                   }}
-                  disabled={!canProceed(currentQuestion.id)}
+                  disabled={!canProceed(currentQuestion.id) || isNavigating}
                   className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
-                    canProceed(currentQuestion.id)
+                    canProceed(currentQuestion.id) && !isNavigating
                       ? 'text-white shadow-lg'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                   style={{
-                    background: canProceed(currentQuestion.id)
-                      ? 'linear-gradient(145deg, #3b82f6, #1d4ed8)'
-                      : undefined,
-                    boxShadow: canProceed(currentQuestion.id)
-                      ? 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)'
-                      : undefined,
+                    background:
+                      canProceed(currentQuestion.id) && !isNavigating
+                        ? 'linear-gradient(145deg, #3b82f6, #1d4ed8)'
+                        : undefined,
+                    boxShadow:
+                      canProceed(currentQuestion.id) && !isNavigating
+                        ? 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)'
+                        : undefined,
                   }}
                   whileTap={
-                    canProceed(currentQuestion.id) ? { scale: 0.95 } : {}
+                    canProceed(currentQuestion.id) && !isNavigating
+                      ? { scale: 0.95 }
+                      : {}
                   }
                   transition={{ duration: 0.1, ease: 'easeInOut' }}
                 >
-                  {canProceed(currentQuestion.id) && (
+                  {canProceed(currentQuestion.id) && !isNavigating && (
                     <div
                       className="absolute inset-0 rounded-2xl"
                       style={{
@@ -186,7 +199,12 @@ export const QuizContainer = () => {
                     />
                   )}
                   <span className="relative z-10 flex items-center justify-center gap-2">
-                    {currentQuestionIndex === questions.length - 1 ? (
+                    {isNavigating ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                        Loading...
+                      </>
+                    ) : currentQuestionIndex === questions.length - 1 ? (
                       <>
                         <Sparkles size={18} />
                         See My Results

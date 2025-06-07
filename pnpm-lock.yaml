@@ -29,6 +29,9 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.49.9
         version: 2.49.9
+      '@types/nprogress':
+        specifier: ^0.2.3
+        version: 0.2.3
       ai:
         specifier: ^4.3.16
         version: 4.3.16(react@19.1.0)(zod@3.25.55)
@@ -50,6 +53,9 @@ importers:
       next:
         specifier: 15.3.3
         version: 15.3.3(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      nprogress:
+        specifier: ^0.2.0
+        version: 0.2.0
       pg:
         specifier: ^8.16.0
         version: 8.16.0
@@ -1133,6 +1139,9 @@ packages:
 
   '@types/node@20.17.57':
     resolution: {integrity: sha512-f3T4y6VU4fVQDKVqJV4Uppy8c1p/sVvS3peyqxyWnzkqXFJLRU7Y1Bl7rMS1Qe9z0v4M6McY0Fp9yBsgHJUsWQ==}
+
+  '@types/nprogress@0.2.3':
+    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
 
   '@types/pg@8.15.4':
     resolution: {integrity: sha512-I6UNVBAoYbvuWkkU3oosC8yxqH21f4/Jc4DK71JLG3dT2mdlGe1z+ep/LQGXaKaOgcvUrsQoPRqfgtMcvZiJhg==}
@@ -2505,6 +2514,9 @@ packages:
 
   node-fetch-native@1.6.6:
     resolution: {integrity: sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ==}
+
+  nprogress@0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
 
   nypm@0.5.4:
     resolution: {integrity: sha512-X0SNNrZiGU8/e/zAB7sCTtdxWTMSIO73q+xuKgglm2Yvzwlo8UoC5FNySQFCvl84uPaeADkqHUZUkWy4aH4xOA==}
@@ -3986,6 +3998,8 @@ snapshots:
   '@types/node@20.17.57':
     dependencies:
       undici-types: 6.19.8
+
+  '@types/nprogress@0.2.3': {}
 
   '@types/pg@8.15.4':
     dependencies:
@@ -5477,6 +5491,8 @@ snapshots:
       - babel-plugin-macros
 
   node-fetch-native@1.6.6: {}
+
+  nprogress@0.2.0: {}
 
   nypm@0.5.4:
     dependencies:
