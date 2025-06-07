@@ -2,8 +2,8 @@
 
 import { useUltravoxCall } from '@/lib/ultravox/hooks/use-ultravox-call';
 import { TranscriptView } from './transcript-view';
-import { AgentAvatar } from './AgentAvatar';
-import { CallCountdown } from './CallCountdown';
+import { AgentAvatar } from './agent-avatar';
+import { CallCountdown } from './call-countdown';
 import { Button } from '@/components/ui/button';
 import { Captions, PhoneOff, Mic } from 'lucide-react';
 import React from 'react';
@@ -20,21 +20,12 @@ export default function UltravoxCallView({
   ultravoxCallId,
   joinUrl,
 }: UltravoxCallInterfaceProps) {
-  const { currentAgentTranscript, joinCall, endCall } =
+  const { currentAgentTranscript, joinCall, endCall, callStarted } =
     useUltravoxCall(joinUrl);
   const [showSubtitles, setShowSubtitles] = React.useState(false);
   const [callEnded, setCallEnded] = React.useState(false);
   const [countdownComplete, setCountdownComplete] = React.useState(false);
-  const [callStarted, setCallStarted] = React.useState(false);
   const router = useRouter();
-
-  // Only join call after user clicks Start Call
-  React.useEffect(() => {
-    if (callStarted) {
-      joinCall();
-    }
-    // eslint-disable-next-line
-  }, [callStarted]);
 
   // End call when countdown completes
   const handleCountdownComplete = () => {
@@ -101,7 +92,7 @@ export default function UltravoxCallView({
                 boxShadow:
                   'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
               }}
-              onClick={() => setCallStarted(true)}
+              onClick={joinCall}
             >
               <Mic size={20} /> <span>Start Call</span>
             </Button>

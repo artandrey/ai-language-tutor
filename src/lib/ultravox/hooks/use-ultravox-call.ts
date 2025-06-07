@@ -5,7 +5,7 @@ export function useUltravoxCall(joinUrl: string) {
   const [ultravoxSession, setUltravoxSession] =
     useState<UltravoxSession | null>(null);
   const [currentAgentTranscript, setCurrentAgentTranscript] = useState('');
-
+  const [callStarted, setCallStarted] = useState(false);
   useEffect(() => {
     const session = new UltravoxSession();
     setUltravoxSession(session);
@@ -19,8 +19,12 @@ export function useUltravoxCall(joinUrl: string) {
       }
     };
     session.addEventListener('transcripts', handleTranscripts);
+    session.addEventListener('callStarted', () => {
+      setCallStarted(true);
+    });
     return () => {
       session.removeEventListener('transcripts', handleTranscripts);
+      session.removeEventListener('callStarted', () => {});
     };
   }, []);
 
@@ -32,5 +36,11 @@ export function useUltravoxCall(joinUrl: string) {
     ultravoxSession?.leaveCall();
   }, [ultravoxSession]);
 
-  return { currentAgentTranscript, ultravoxSession, joinCall, endCall };
+  return {
+    currentAgentTranscript,
+    ultravoxSession,
+    joinCall,
+    endCall,
+    callStarted,
+  };
 }
