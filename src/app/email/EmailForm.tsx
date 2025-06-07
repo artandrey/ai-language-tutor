@@ -31,7 +31,7 @@ export default function EmailForm() {
       return;
     }
     trackEvent(AnalyticsEvents.EMAIL_ENTERED, { email: data.email });
-    router.replace('/quiz');
+    router.replace('/voice');
   }
 
   return (

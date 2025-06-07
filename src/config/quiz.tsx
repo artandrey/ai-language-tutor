@@ -291,7 +291,7 @@ export const sampleQuestions: Question[] = [
       { label: 'Art & Creativity', value: 'Art & Creativity' },
     ],
     required: true,
-    redirect: '/voice',
+    redirect: '/email',
   },
   // --- Vocabulary Self-Assessment ---
   {
