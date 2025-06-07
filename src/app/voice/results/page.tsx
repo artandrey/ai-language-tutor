@@ -5,6 +5,7 @@ import { ProcessingLoader } from '@/components/voice/processing-loader';
 import { CallResults } from '@/components/voice/call-results';
 import { motion } from 'motion/react';
 import { Mic } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function VoiceResultsPage() {
   const { call, isLoading, error, isProcessingCompleted } = useCallPolling();
@@ -53,29 +54,33 @@ export default function VoiceResultsPage() {
               <p className="text-gray-600 mb-6">
                 We couldn't load your call results. Please try again.
               </p>
-              <motion.a
-                href="/voice"
+              <Button
+                asChild
                 className="inline-block py-4 px-6 rounded-2xl font-semibold text-lg text-white shadow-lg relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(145deg, #3b82f6, #1d4ed8)',
                   boxShadow:
                     'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
                 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.1, ease: 'easeInOut' }}
               >
-                <div
-                  className="absolute inset-0 rounded-2xl"
-                  style={{
-                    background:
-                      'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
-                  }}
-                />
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  <Mic size={18} />
-                  Try Speaking Assessment
-                </span>
-              </motion.a>
+                <motion.a
+                  href="/voice"
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.1, ease: 'easeInOut' }}
+                >
+                  <div
+                    className="absolute inset-0 rounded-2xl"
+                    style={{
+                      background:
+                        'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
+                    }}
+                  />
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <Mic size={18} />
+                    Try Speaking Assessment
+                  </span>
+                </motion.a>
+              </Button>
             </motion.div>
           </div>
         </div>
@@ -128,29 +133,33 @@ export default function VoiceResultsPage() {
                 You haven't completed any calls yet. Start a new session to get
                 personalized feedback!
               </p>
-              <motion.a
-                href="/voice"
+              <Button
+                asChild
                 className="inline-block py-4 px-6 rounded-2xl font-semibold text-lg text-white shadow-lg relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(145deg, #3b82f6, #1d4ed8)',
                   boxShadow:
                     'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
                 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.1, ease: 'easeInOut' }}
               >
-                <div
-                  className="absolute inset-0 rounded-2xl"
-                  style={{
-                    background:
-                      'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
-                  }}
-                />
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  <Mic size={18} />
-                  Try Speaking Assessment
-                </span>
-              </motion.a>
+                <motion.a
+                  href="/voice"
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.1, ease: 'easeInOut' }}
+                >
+                  <div
+                    className="absolute inset-0 rounded-2xl"
+                    style={{
+                      background:
+                        'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
+                    }}
+                  />
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <Mic size={18} />
+                    Try Speaking Assessment
+                  </span>
+                </motion.a>
+              </Button>
             </motion.div>
           </div>
         </div>

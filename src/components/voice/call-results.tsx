@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { ProgressBar } from '@/components/molecules/progress-bar';
 
 interface CallResultsProps {
   call: {
@@ -106,34 +107,12 @@ export function CallResults({ call }: CallResultsProps) {
 
       <div className="relative z-10 flex flex-col max-w-2xl mx-auto p-4 pt-4 h-full min-h-screen justify-center">
         {/* Progress indicator */}
-        <div className="w-full flex items-center gap-4 mb-2">
-          <button
-            onClick={prevStage}
-            disabled={currentStage === 0}
-            className={`p-2 rounded-lg transition-all duration-200 ${
-              currentStage > 0
-                ? 'text-gray-700 hover:bg-gray-100 hover:scale-105'
-                : 'text-gray-400 cursor-not-allowed'
-            }`}
-            style={{ minWidth: 36 }}
-            aria-label="Back"
-          >
-            <ArrowLeft size={20} />
-          </button>
-          <div className="flex-1 bg-gray-200/50 rounded-full h-2 overflow-hidden backdrop-blur-sm">
-            <motion.div
-              className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
-              initial={{ width: 0 }}
-              animate={{
-                width: `${((currentStage + 1) / stages.length) * 100}%`,
-              }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-            />
-          </div>
-          <span className="text-xs text-gray-500 min-w-[2.5rem] text-right">
-            {currentStage + 1}/{stages.length}
-          </span>
-        </div>
+        <ProgressBar
+          currentIndex={currentStage}
+          total={stages.length}
+          canGoBack={currentStage > 0}
+          onBack={prevStage}
+        />
 
         {/* Main content card with scroll area and button inside */}
         <AnimatePresence mode="wait">

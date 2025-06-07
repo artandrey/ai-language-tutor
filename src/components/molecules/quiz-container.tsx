@@ -93,7 +93,13 @@ export const QuizContainer = () => {
       </div>
 
       <div className="relative z-10 flex flex-col max-w-2xl mx-auto p-4 pt-4 h-full">
-        <ProgressBar />
+        <ProgressBar
+          currentIndex={currentQuestionIndex}
+          total={questions.length}
+          canGoBack={currentQuestionIndex > 0}
+          onBack={() => router.replace(`/quiz?q=${q - 1}`)}
+          hideBackButton={!!currentQuestion.hideBackButton}
+        />
 
         <AnimatePresence mode="wait">
           <motion.div

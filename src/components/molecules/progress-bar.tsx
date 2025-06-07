@@ -1,48 +1,48 @@
 import { motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
-import { useQuiz } from '@/hooks/use-quiz';
+import { Button } from '@/components/ui/button';
 
 interface ProgressBarProps {
+  currentIndex: number;
+  total: number;
+  canGoBack?: boolean;
   onBack?: () => void;
+  hideBackButton?: boolean;
 }
 
-export const ProgressBar = ({ onBack }: ProgressBarProps) => {
-  const {
-    currentQuestionIndex,
-    questions,
-    canGoBack,
-    goBack,
-    currentQuestion,
-  } = useQuiz();
-
-  const progress =
-    questions.length > 0
-      ? ((currentQuestionIndex + 1) / questions.length) * 100
-      : 0;
+export const ProgressBar = ({
+  currentIndex,
+  total,
+  canGoBack = true,
+  onBack,
+  hideBackButton = false,
+}: ProgressBarProps) => {
+  const progress = total > 0 ? ((currentIndex + 1) / total) * 100 : 0;
 
   const handleBack = () => {
     if (canGoBack) {
-      goBack();
       onBack?.();
     }
   };
 
   return (
     <div className="w-full flex items-center gap-4 mb-2">
-      {currentQuestion?.hideBackButton ? (
+      {hideBackButton ? (
         <div className="p-2 rounded-lg w-10 h-10" />
       ) : (
-        <button
+        <Button
           onClick={handleBack}
           disabled={!canGoBack}
-          className={`p-2 rounded-lg transition-all duration-200 ${
+          className={`p-2 rounded-lg transition-all duration-200 bg-white border border-gray-200 shadow-sm ${
             canGoBack
               ? 'text-gray-700 hover:bg-gray-100 hover:scale-105'
               : 'text-gray-400 cursor-not-allowed'
           }`}
+          style={{ minWidth: 36 }}
+          aria-label="Back"
         >
           <ArrowLeft size={24} />
-        </button>
+        </Button>
       )}
 
       <div className="flex-1 bg-gray-200/50 rounded-full h-2 overflow-hidden backdrop-blur-sm">
@@ -55,7 +55,7 @@ export const ProgressBar = ({ onBack }: ProgressBarProps) => {
       </div>
 
       <span className="text-sm text-gray-500 min-w-[3rem]">
-        {currentQuestionIndex + 1}/{questions.length}
+        {currentIndex + 1}/{total}
       </span>
     </div>
   );

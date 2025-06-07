@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/lib/auth/hooks/use-auth';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 export default function AuthTestPage() {
   const {
@@ -111,28 +112,28 @@ export default function AuthTestPage() {
             <h2 className="text-xl font-semibold mb-4">Actions</h2>
 
             <div className="space-y-4">
-              <button
+              <Button
                 onClick={handleCreateNewSession}
                 className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
               >
                 Create New Anonymous Session
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={testUserInfo}
                 disabled={!user}
                 className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
               >
                 Test User Info
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={signOut}
                 disabled={!user}
                 className="w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
               >
                 Sign Out
-              </button>
+              </Button>
             </div>
           </div>
         </div>

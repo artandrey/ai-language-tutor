@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 import posthog from 'posthog-js';
 import { AnalyticsEvents } from '@/lib/analytics/events';
+import { Button } from '@/components/ui/button';
 
 const plans = [
   { name: '1-Week Plan', price: 9.99, perDay: '1.43', original: null },
@@ -130,7 +131,7 @@ function PaymentContent() {
                 30-day money back guarantee
               </span>
             </div>
-            <button
+            <Button
               className="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white font-bold text-lg shadow-lg hover:from-blue-600 hover:to-blue-500 transition"
               onClick={() =>
                 router.replace(
@@ -141,7 +142,7 @@ function PaymentContent() {
               }
             >
               Get My Plan
-            </button>
+            </Button>
           </div>
           <div className="bg-white/80 rounded-xl p-6 mb-8 border border-gray-200/50">
             <h3 className="text-lg font-semibold text-blue-700 mb-4">

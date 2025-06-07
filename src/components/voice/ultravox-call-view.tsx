@@ -225,7 +225,7 @@ export default function UltravoxCallView({
       </div>
 
       {/* Floating CC Toggle Button - Top Right */}
-      <button
+      <Button
         aria-label="Toggle captions"
         className={`fixed top-4 right-4 z-20 p-2.5 rounded-full transition-all duration-300 shadow-lg ${
           showSubtitles
@@ -239,7 +239,7 @@ export default function UltravoxCallView({
         {showSubtitles && (
           <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white"></div>
         )}
-      </button>
+      </Button>
 
       {/* Compact Transcript - Fixed at top when enabled */}
       {showSubtitles && (
