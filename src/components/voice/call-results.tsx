@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -490,8 +490,9 @@ export function CallResults({ call }: CallResultsProps) {
                                 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
                             }}
                           />
-                          <span className="relative z-10">
-                            Get my personal plan
+                          <span className="relative z-10 flex items-center justify-center gap-2">
+                            <Sparkles size={20} />
+                            Unlock Full Learning Experience
                           </span>
                         </motion.button>
                       </div>

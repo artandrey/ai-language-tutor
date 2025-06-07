@@ -10,6 +10,7 @@ import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
 import posthog from 'posthog-js';
 import { useEffect } from 'react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 export const QuizContainer = () => {
   const { questions, canProceed, isCompleted } = useQuizStore();
@@ -170,10 +171,18 @@ export const QuizContainer = () => {
                       }}
                     />
                   )}
-                  <span className="relative z-10">
-                    {currentQuestionIndex === questions.length - 1
-                      ? 'Get my personal plan'
-                      : 'Continue'}
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {currentQuestionIndex === questions.length - 1 ? (
+                      <>
+                        <Sparkles size={18} />
+                        See My Results
+                      </>
+                    ) : (
+                      <>
+                        Continue
+                        <ArrowRight size={18} />
+                      </>
+                    )}
                   </span>
                 </motion.button>
               </motion.div>

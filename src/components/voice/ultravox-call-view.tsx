@@ -137,12 +137,12 @@ export default function UltravoxCallView({
                     size={20}
                     className="animate-spin"
                   />
-                  <span>Starting Call...</span>
+                  <span>Connecting to Tutor...</span>
                 </>
               ) : (
                 <>
                   <Mic size={20} />
-                  <span>Start Assessment Call</span>
+                  <span>Talk with AI Tutor</span>
                 </>
               )}
             </Button>
@@ -152,7 +152,7 @@ export default function UltravoxCallView({
               className="w-full py-4 px-6 rounded-2xl font-medium text-base shadow-sm border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all"
               onClick={handleSkip}
             >
-              Skip for now
+              Maybe Later
             </Button>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Mic } from 'lucide-react';
 
 export default function VoiceInitPage() {
   return (
@@ -13,7 +14,7 @@ export default function VoiceInitPage() {
             variant="ghost"
             className="w-full text-gray-600 hover:text-gray-900 hover:bg-gray-100"
           >
-            Skip
+            Skip Assessment for Now
           </Button>
         </Link>
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
@@ -86,14 +87,15 @@ export default function VoiceInitPage() {
           className="block"
         >
           <Button
-            className="w-full py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg"
+            className="w-full py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg flex items-center justify-center gap-3"
             style={{
               background: 'linear-gradient(145deg, #3b82f6, #1d4ed8)',
               boxShadow:
                 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
             }}
           >
-            Get Started
+            <Mic size={20} />
+            Start Speaking Assessment
           </Button>
         </Link>
       </div>

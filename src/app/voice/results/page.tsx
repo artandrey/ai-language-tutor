@@ -4,6 +4,7 @@ import { useCallPolling } from '@/hooks/useCallPolling';
 import { ProcessingLoader } from '@/components/voice/processing-loader';
 import { CallResults } from '@/components/voice/call-results';
 import { motion } from 'motion/react';
+import { Mic } from 'lucide-react';
 
 export default function VoiceResultsPage() {
   const { call, isLoading, error, isProcessingCompleted } = useCallPolling();
@@ -70,7 +71,10 @@ export default function VoiceResultsPage() {
                       'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
                   }}
                 />
-                <span className="relative z-10">Start New Session</span>
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Mic size={18} />
+                  Try Speaking Assessment
+                </span>
               </motion.a>
             </motion.div>
           </div>
@@ -142,7 +146,10 @@ export default function VoiceResultsPage() {
                       'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
                   }}
                 />
-                <span className="relative z-10">Start New Session</span>
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Mic size={18} />
+                  Try Speaking Assessment
+                </span>
               </motion.a>
             </motion.div>
           </div>

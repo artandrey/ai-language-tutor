@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AgentAvatar } from '@/components/voice/agent-avatar';
+import { ArrowRight } from 'lucide-react';
 
 export default function VoiceSkipPage() {
   return (
@@ -24,14 +25,15 @@ export default function VoiceSkipPage() {
           className="block"
         >
           <Button
-            className="w-full py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg"
+            className="w-full py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg flex items-center justify-center gap-3"
             style={{
               background: 'linear-gradient(145deg, #3b82f6, #1d4ed8)',
               boxShadow:
                 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
             }}
           >
-            Continue
+            Continue Learning
+            <ArrowRight size={20} />
           </Button>
         </Link>
       </div>

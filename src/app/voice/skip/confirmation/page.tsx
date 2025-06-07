@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { AgentAvatar } from '@/components/voice/agent-avatar';
 import { useRouter } from 'next/navigation';
+import { ArrowRight } from 'lucide-react';
 
 export default function VoiceSkipConfirmationPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function VoiceSkipConfirmationPage() {
           </div>
         </div>
         <Button
-          className="w-full py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg"
+          className="w-full py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg flex items-center justify-center gap-3"
           style={{
             background: 'linear-gradient(145deg, #3b82f6, #1d4ed8)',
             boxShadow:
@@ -32,7 +33,8 @@ export default function VoiceSkipConfirmationPage() {
           }}
           onClick={() => router.replace('/quiz?q=15')}
         >
-          Continue to Quiz
+          <ArrowRight size={20} />
+          Continue with Questions
         </Button>
       </div>
     </div>
