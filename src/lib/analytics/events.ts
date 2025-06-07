@@ -20,6 +20,9 @@ export enum AnalyticsEvents {
 
   // System events
   PAGEVIEW = '$pageview',
+
+  // New event
+  EMAIL_ENTERED = 'user_entered_email',
 }
 
 /**

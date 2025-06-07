@@ -7,6 +7,7 @@ import { emailSchema, EmailFormData } from './schema';
 import { saveUserEmail } from './actions';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import { trackEvent, AnalyticsEvents } from '@/lib/analytics/events';
 
 export default function EmailForm() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function EmailForm() {
       setServerError(result.errors.email[0]);
       return;
     }
+    trackEvent(AnalyticsEvents.EMAIL_ENTERED, { email: data.email });
     router.replace('/quiz');
   }
 
