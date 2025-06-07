@@ -1,9 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 
 export function ProcessingLoader() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 95) return prev; // Stop at 95% to avoid reaching 100% before processing is done
+        return prev + Math.random() * 3 + 1; // Random increment between 1-4%
+      });
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="h-full bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
       {/* Grainy gradient overlay */}
@@ -23,23 +36,20 @@ export function ProcessingLoader() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 p-8 text-center"
+            className="bg-gray-900/40 backdrop-blur-sm rounded-3xl border border-gray-700/30 p-8 text-center w-full max-w-md"
           >
-            {/* Animated Logo/Icon */}
+            {/* Animated Icon */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
               className="relative mb-8"
             >
-              <div className="w-24 h-24 mx-auto mb-6 relative">
-                {/* Pulsing circles */}
-                <div className="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-25"></div>
-                <div className="absolute inset-0 bg-blue-500 rounded-full animate-pulse opacity-50"></div>
+              <div className="w-16 h-16 mx-auto mb-6 relative">
                 {/* Inner icon */}
                 <div className="relative w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-12 h-12 text-white animate-spin"
+                    className="w-8 h-8 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -60,48 +70,34 @@ export function ProcessingLoader() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="space-y-4"
+              className="space-y-4 mb-8"
             >
               <h1 className="text-3xl font-bold text-white">
                 Analyzing your conversation...
               </h1>
-              <p className="text-gray-300 text-lg max-w-md mx-auto">
+              <p className="text-gray-300 text-lg">
                 Swiftly AI is processing your speech patterns, grammar, and
                 vocabulary to provide personalized feedback.
               </p>
-            </motion.div>
-
-            {/* Progress dots */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-              className="flex justify-center space-x-2 mt-8"
-            >
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
-              <div
-                className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"
-                style={{ animationDelay: '0.1s' }}
-              ></div>
-              <div
-                className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"
-                style={{ animationDelay: '0.2s' }}
-              ></div>
             </motion.div>
 
             {/* Progress bar */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="mt-8 max-w-xs mx-auto"
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="w-full"
             >
-              <div className="w-full bg-gray-800/50 rounded-full h-2 backdrop-blur-sm">
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-3">
+                <span>Processing...</span>
+                <span>{Math.round(progress)}%</span>
+              </div>
+              <div className="w-full bg-gray-800/50 rounded-full h-3 backdrop-blur-sm overflow-hidden">
                 <motion.div
-                  className="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full"
+                  className="bg-gradient-to-r from-blue-500 to-blue-400 h-3 rounded-full"
                   initial={{ width: 0 }}
-                  animate={{ width: '75%' }}
-                  transition={{ delay: 1, duration: 2, ease: 'easeInOut' }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
                 />
               </div>
               <p className="text-gray-400 text-sm mt-3">
