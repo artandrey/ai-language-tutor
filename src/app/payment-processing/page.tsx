@@ -1,6 +1,16 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import posthog from 'posthog-js';
 
 export default function PaymentProcessingPage() {
+  const searchParams = useSearchParams();
+  const plan = searchParams.get('plan');
+  useEffect(() => {
+    posthog.capture('user_initialized_payment', { plan });
+  }, [plan]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#0a1837] to-[#1a1037] p-4">
       <div className="bg-white/10 rounded-xl p-8 text-center max-w-md w-full">

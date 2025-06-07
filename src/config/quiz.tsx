@@ -326,7 +326,6 @@ export const sampleQuestions: Question[] = [
       { label: 'paradigm', value: 'paradigm', metadata: { level: 'C2' } },
     ],
     required: true,
-    columns: 2,
   },
   {
     id: '16',
@@ -364,7 +363,6 @@ export const sampleQuestions: Question[] = [
       { label: 'dichotomy', value: 'dichotomy', metadata: { level: 'C2' } },
     ],
     required: true,
-    columns: 2,
   },
   {
     id: '17',
@@ -398,7 +396,6 @@ export const sampleQuestions: Question[] = [
       { label: 'perfunctory', value: 'perfunctory', metadata: { level: 'C2' } },
     ],
     required: true,
-    columns: 2,
   },
   {
     id: '18',

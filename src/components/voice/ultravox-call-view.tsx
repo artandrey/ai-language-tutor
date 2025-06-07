@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Captions, PhoneOff, Mic } from 'lucide-react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import posthog from 'posthog-js';
 
 interface UltravoxCallInterfaceProps {
   callId: string;
@@ -15,9 +16,9 @@ interface UltravoxCallInterfaceProps {
   joinUrl: string;
 }
 
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default function UltravoxCallView({
-  callId,
-  ultravoxCallId,
   joinUrl,
 }: UltravoxCallInterfaceProps) {
   const { currentAgentTranscript, joinCall, endCall, callStarted } =
@@ -28,20 +29,21 @@ export default function UltravoxCallView({
   const router = useRouter();
 
   // End call when countdown completes
-  const handleCountdownComplete = () => {
+  const handleCountdownComplete = async () => {
+    posthog.capture('user_ended_conversation_by_timeout');
     setCountdownComplete(true);
     setCallEnded(true);
-    endCall();
-    // Redirect to results page
-    router.push('/voice/results');
+    await wait(2000);
+    router.replace('/voice/results');
   };
 
   // End call when hang up is pressed
-  const handleEndCall = () => {
+  const handleEndCall = async () => {
+    posthog.capture('user_ended_conversation_by_user');
     setCallEnded(true);
     endCall();
-    // Redirect to results page
-    router.push('/voice/results');
+    await wait(2000);
+    router.replace('/voice/results');
   };
 
   // Handle skip for now (redirect to quiz or another page)
@@ -96,7 +98,10 @@ export default function UltravoxCallView({
                 boxShadow:
                   'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
               }}
-              onClick={joinCall}
+              onClick={() => {
+                posthog.capture('user_started_conversation');
+                joinCall();
+              }}
             >
               <Mic size={20} /> <span>Start Call</span>
             </Button>

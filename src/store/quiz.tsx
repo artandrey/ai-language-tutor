@@ -40,9 +40,20 @@ interface QuizState {
 
 const STORAGE_KEY = 'quiz-answers';
 
+function loadFromStorage(): QuizAnswer[] {
+  if (typeof window === 'undefined') return [];
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return [];
+  try {
+    return JSON.parse(stored) as QuizAnswer[];
+  } catch {
+    return [];
+  }
+}
+
 export const useQuizStore = create<QuizState>((set, get) => ({
   questions: sampleQuestions,
-  answers: [],
+  answers: loadFromStorage(),
 
   setQuestions: (questions) => {
     set({ questions, answers: [] });

@@ -5,7 +5,8 @@ import { VoiceMetricsSummary } from '@/components/metrics/VoiceMetricsSummary';
 import { useCallPolling } from '@/hooks/useCallPolling';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import posthog from 'posthog-js';
 
 const plans = [
   { name: '1-Week Plan', price: 9.99, perDay: '1.43', original: null },
@@ -31,6 +32,10 @@ export default function PaymentPage() {
     isLoading: isVoiceLoading,
     error: voiceError,
   } = useCallPolling();
+
+  useEffect(() => {
+    posthog.capture('user_opened_payment_page', { type });
+  }, [type]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4">

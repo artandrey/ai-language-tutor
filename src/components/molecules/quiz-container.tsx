@@ -8,6 +8,8 @@ import { Filler } from './filler';
 import { MultipleChoice } from './multiple-choice';
 import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
+import posthog from 'posthog-js';
+import { useEffect } from 'react';
 
 export const QuizContainer = () => {
   const { questions, canProceed, isCompleted } = useQuizStore();
@@ -19,6 +21,10 @@ export const QuizContainer = () => {
   const currentQuestionIndex = q - 1;
 
   const currentQuestion = questions[currentQuestionIndex];
+
+  useEffect(() => {
+    posthog.capture('user_started_quiz');
+  }, []);
 
   if (!currentQuestion) {
     return (
