@@ -134,8 +134,12 @@ export default function UltravoxCallView({
           size={120}
         />
         {showSubtitles && (
-          <div className="w-full">
-            <TranscriptView transcript={currentAgentTranscript} />
+          <div className="w-full mt-4">
+            <div className="rounded-2xl bg-white/10 backdrop-blur-md p-4 shadow-lg border border-blue-500/30">
+              <div className="text-blue-100 text-base font-medium leading-relaxed font-mono whitespace-pre-line">
+                <TranscriptView transcript={currentAgentTranscript} />
+              </div>
+            </div>
           </div>
         )}
         <Button
