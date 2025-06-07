@@ -1,4 +1,6 @@
 import { Question } from '@/store/quiz';
+import { VocabularyLoadingFiller } from '@/components/fillers/vocabulary-loading-filler';
+import { VocabularyStatsFiller } from '@/components/fillers/vocabulary-stats-filler';
 
 export const sampleQuestions: Question[] = [
   {
@@ -397,5 +399,20 @@ export const sampleQuestions: Question[] = [
     ],
     required: true,
     columns: 2,
+  },
+  {
+    id: '18',
+    type: 'filler',
+    title: 'Evaluating your vocabulary skills',
+    filler: <VocabularyLoadingFiller />,
+    hideContinueButton: true,
+    hideBackButton: true,
+  },
+  {
+    id: '19',
+    type: 'filler',
+    title: 'Your Vocabulary Level',
+    filler: <VocabularyStatsFiller />,
+    hideBackButton: true,
   },
 ];

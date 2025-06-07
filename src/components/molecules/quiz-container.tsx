@@ -63,7 +63,11 @@ export const QuizContainer = () => {
           />
         );
       case 'filler':
-        return <Filler questionId={currentQuestion.id} />;
+        return (
+          <Filler questionId={currentQuestion.id}>
+            {currentQuestion.filler}
+          </Filler>
+        );
       default:
         return null;
     }
@@ -118,61 +122,65 @@ export const QuizContainer = () => {
               </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="p-6 pt-0"
-            >
-              <motion.button
-                onClick={async () => {
-                  if (!canProceed(currentQuestion.id)) return;
-
-                  await itemControls.start({
-                    opacity: 0,
-                    transition: { duration: 0.4 },
-                  });
-                  if (currentQuestion.redirect) {
-                    router.replace(currentQuestion.redirect);
-                  } else if (currentQuestionIndex === questions.length - 1) {
-                    router.replace('/');
-                  } else {
-                    router.replace(`/quiz?q=${q + 1}`);
-                  }
-                }}
-                disabled={!canProceed(currentQuestion.id)}
-                className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
-                  canProceed(currentQuestion.id)
-                    ? 'text-white shadow-lg'
-                    : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                }`}
-                style={{
-                  background: canProceed(currentQuestion.id)
-                    ? 'linear-gradient(145deg, #3b82f6, #1d4ed8)'
-                    : undefined,
-                  boxShadow: canProceed(currentQuestion.id)
-                    ? 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)'
-                    : undefined,
-                }}
-                whileTap={canProceed(currentQuestion.id) ? { scale: 0.95 } : {}}
-                transition={{ duration: 0.1, ease: 'easeInOut' }}
+            {!currentQuestion.hideContinueButton && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="p-6 pt-0"
               >
-                {canProceed(currentQuestion.id) && (
-                  <div
-                    className="absolute inset-0 rounded-2xl"
-                    style={{
-                      background:
-                        'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
-                    }}
-                  />
-                )}
-                <span className="relative z-10">
-                  {currentQuestionIndex === questions.length - 1
-                    ? 'Complete'
-                    : 'Continue'}
-                </span>
-              </motion.button>
-            </motion.div>
+                <motion.button
+                  onClick={async () => {
+                    if (!canProceed(currentQuestion.id)) return;
+
+                    await itemControls.start({
+                      opacity: 0,
+                      transition: { duration: 0.4 },
+                    });
+                    if (currentQuestion.redirect) {
+                      router.replace(currentQuestion.redirect);
+                    } else if (currentQuestionIndex === questions.length - 1) {
+                      router.replace('/');
+                    } else {
+                      router.replace(`/quiz?q=${q + 1}`);
+                    }
+                  }}
+                  disabled={!canProceed(currentQuestion.id)}
+                  className={`w-full py-6 px-6 rounded-2xl font-semibold text-lg transition-all duration-300 relative overflow-hidden ${
+                    canProceed(currentQuestion.id)
+                      ? 'text-white shadow-lg'
+                      : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                  }`}
+                  style={{
+                    background: canProceed(currentQuestion.id)
+                      ? 'linear-gradient(145deg, #3b82f6, #1d4ed8)'
+                      : undefined,
+                    boxShadow: canProceed(currentQuestion.id)
+                      ? 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)'
+                      : undefined,
+                  }}
+                  whileTap={
+                    canProceed(currentQuestion.id) ? { scale: 0.95 } : {}
+                  }
+                  transition={{ duration: 0.1, ease: 'easeInOut' }}
+                >
+                  {canProceed(currentQuestion.id) && (
+                    <div
+                      className="absolute inset-0 rounded-2xl"
+                      style={{
+                        background:
+                          'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0.1) 100%)',
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">
+                    {currentQuestionIndex === questions.length - 1
+                      ? 'Complete'
+                      : 'Continue'}
+                  </span>
+                </motion.button>
+              </motion.div>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>

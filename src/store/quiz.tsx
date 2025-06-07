@@ -17,6 +17,9 @@ export interface Question {
   required?: boolean;
   redirect?: string;
   columns?: number;
+  filler?: React.ReactNode;
+  hideContinueButton?: boolean;
+  hideBackButton?: boolean;
 }
 
 export interface QuizAnswer {
