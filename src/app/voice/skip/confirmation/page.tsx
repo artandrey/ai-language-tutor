@@ -15,7 +15,7 @@ export default function VoiceSkipConfirmationPage() {
           </div>
         </div>
         <Link
-          href="/"
+          href="/quiz?q=15"
           className="block"
         >
           <Button
@@ -26,7 +26,7 @@ export default function VoiceSkipConfirmationPage() {
                 'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
             }}
           >
-            Go Home
+            Continue to Quiz
           </Button>
         </Link>
       </div>

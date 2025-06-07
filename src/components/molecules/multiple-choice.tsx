@@ -1,10 +1,11 @@
 import { motion } from 'motion/react';
 import { useQuizStore } from '@/store/quiz';
 import { Check } from 'lucide-react';
+import { Option } from '@/store/quiz';
 
 interface MultipleChoiceProps {
   questionId: string;
-  options: string[];
+  options: Option[];
 }
 
 export const MultipleChoice = ({
@@ -15,22 +16,20 @@ export const MultipleChoice = ({
   const currentAnswer = getAnswer(questionId);
   const selectedValues = (currentAnswer?.value as string[]) || [];
 
-  const handleToggle = (option: string) => {
-    const newValues = selectedValues.includes(option)
-      ? selectedValues.filter((v) => v !== option)
-      : [...selectedValues, option];
-
+  const handleToggle = (option: Option) => {
+    const newValues = selectedValues.includes(option.value)
+      ? selectedValues.filter((v) => v !== option.value)
+      : [...selectedValues, option.value];
     setAnswer(questionId, newValues);
   };
 
   return (
     <div className="space-y-4">
       {options.map((option, index) => {
-        const isSelected = selectedValues.includes(option);
-
+        const isSelected = selectedValues.includes(option.value);
         return (
           <motion.button
-            key={option}
+            key={option.value}
             onClick={() => handleToggle(option)}
             className={`w-full p-4 rounded-2xl text-left transition-all duration-200 ${
               isSelected
@@ -42,7 +41,7 @@ export const MultipleChoice = ({
             transition={{ delay: index * 0.1 }}
           >
             <div className="flex items-center justify-between">
-              <span className="font-medium">{option}</span>
+              <span className="font-medium">{option.label}</span>
               <div
                 className={`grow-0 shrink-0 ml-2 basis-5 h-5 rounded-md border-2 transition-all duration-200 flex items-center justify-center ${
                   isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-500'

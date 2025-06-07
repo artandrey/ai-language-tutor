@@ -2,11 +2,18 @@ import { create } from 'zustand';
 import { sampleQuestions } from '@/config/quiz';
 export type QuestionType = 'single' | 'multiple' | 'filler';
 
+export interface Option {
+  label: string;
+  value: string;
+  description?: string;
+  metadata?: Record<string, string | number | boolean>;
+}
+
 export interface Question {
   id: string;
   type: QuestionType;
   title: string;
-  options?: string[];
+  options?: Option[];
   required?: boolean;
   redirect?: string;
 }

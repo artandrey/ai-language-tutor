@@ -1,9 +1,10 @@
 import { motion } from 'motion/react';
 import { useQuizStore } from '@/store/quiz';
+import { Option } from '@/store/quiz';
 
 interface SingleChoiceProps {
   questionId: string;
-  options: string[];
+  options: Option[];
 }
 
 export const SingleChoice = ({ questionId, options }: SingleChoiceProps) => {
@@ -11,18 +12,17 @@ export const SingleChoice = ({ questionId, options }: SingleChoiceProps) => {
   const currentAnswer = getAnswer(questionId);
   const selectedValue = (currentAnswer?.value as string) || '';
 
-  const handleSelect = (option: string) => {
-    setAnswer(questionId, option);
+  const handleSelect = (option: Option) => {
+    setAnswer(questionId, option.value);
   };
 
   return (
     <div className="space-y-4">
       {options.map((option, index) => {
-        const isSelected = selectedValue === option;
-
+        const isSelected = selectedValue === option.value;
         return (
           <motion.button
-            key={option}
+            key={option.value}
             onClick={() => handleSelect(option)}
             className={`w-full p-4 rounded-2xl text-left transition-all duration-200 ${
               isSelected
@@ -38,7 +38,7 @@ export const SingleChoice = ({ questionId, options }: SingleChoiceProps) => {
             }}
           >
             <div className="flex items-center justify-between">
-              <span className="font-medium">{option}</span>
+              <span className="font-medium">{option.label}</span>
               <div
                 className={`grow-0 shrink-0 ml-2 basis-5 h-5 rounded-full border-2 transition-all duration-200 ${
                   isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-500'
