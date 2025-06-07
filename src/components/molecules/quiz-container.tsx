@@ -8,6 +8,9 @@ import { Filler } from './filler';
 import { MultipleChoice } from './multiple-choice';
 import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
+import posthog from 'posthog-js';
+import { AnalyticsEvent } from '@/config/analytics';
+import React, { useEffect } from 'react';
 
 export const QuizContainer = () => {
   const {
@@ -23,9 +26,11 @@ export const QuizContainer = () => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  if (isCompleted) {
-    return null;
-  }
+  useEffect(() => {
+    if (currentQuestionIndex === 0) {
+      posthog.capture(AnalyticsEvent.QUIZ_STARTED);
+    }
+  }, [currentQuestionIndex]);
 
   if (!currentQuestion) {
     return (
@@ -128,6 +133,7 @@ export const QuizContainer = () => {
                   });
                   if (currentQuestionIndex === questions.length - 1) {
                     router.replace('/plan');
+                    posthog.capture(AnalyticsEvent.QUIZ_COMPLETED);
                   } else {
                     nextQuestion();
                   }
