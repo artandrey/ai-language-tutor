@@ -1,0 +1,1 @@
+ALTER TABLE "calls" ADD COLUMN "users_speech_duration" text;

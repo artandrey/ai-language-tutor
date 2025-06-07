@@ -1,40 +1,49 @@
 import { motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
-import { useQuizStore } from '@/store/quiz';
+import { useQuiz } from '@/hooks/use-quiz';
 
 interface ProgressBarProps {
   onBack?: () => void;
 }
 
 export const ProgressBar = ({ onBack }: ProgressBarProps) => {
-  const { currentQuestionIndex, questions, previousQuestion } = useQuizStore();
+  const {
+    currentQuestionIndex,
+    questions,
+    canGoBack,
+    goBack,
+    currentQuestion,
+  } = useQuiz();
 
   const progress =
     questions.length > 0
       ? ((currentQuestionIndex + 1) / questions.length) * 100
       : 0;
-  const canGoBack = currentQuestionIndex > 0;
 
   const handleBack = () => {
     if (canGoBack) {
-      previousQuestion();
+      goBack();
       onBack?.();
     }
   };
 
   return (
     <div className="w-full flex items-center gap-4 mb-2">
-      <button
-        onClick={handleBack}
-        disabled={!canGoBack}
-        className={`p-2 rounded-lg transition-all duration-200 ${
-          canGoBack
-            ? 'text-white hover:bg-white/10 hover:scale-105'
-            : 'text-gray-500 cursor-not-allowed'
-        }`}
-      >
-        <ArrowLeft size={24} />
-      </button>
+      {currentQuestion?.hideBackButton ? (
+        <div className="p-2 rounded-lg w-10 h-10" />
+      ) : (
+        <button
+          onClick={handleBack}
+          disabled={!canGoBack}
+          className={`p-2 rounded-lg transition-all duration-200 ${
+            canGoBack
+              ? 'text-white hover:bg-white/10 hover:scale-105'
+              : 'text-gray-500 cursor-not-allowed'
+          }`}
+        >
+          <ArrowLeft size={24} />
+        </button>
+      )}
 
       <div className="flex-1 bg-gray-800/50 rounded-full h-2 overflow-hidden backdrop-blur-sm">
         <motion.div

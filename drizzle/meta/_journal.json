@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1748913651809,
+      "tag": "0000_mature_unus",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1749243387423,
+      "tag": "0001_oval_impossible_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1749252912894,
+      "tag": "0002_awesome_peter_quill",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1749261673100,
+      "tag": "0003_tranquil_nocturne",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1749263122425,
+      "tag": "0004_brief_charles_xavier",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1749263160341,
+      "tag": "0005_solid_sentry",
+      "breakpoints": true
+    }
+  ]
+}
