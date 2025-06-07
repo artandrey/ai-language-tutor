@@ -26,33 +26,60 @@ export async function processGrammar(
   userTranscript: string,
   fullConversation: string
 ) {
-  const prompt = `Analyze the user's speech from the following transcript and identify significant grammar errors. Pay close attention to the full conversation for context.
+  const prompt = `You are an expert English language tutor analyzing a transcript of a student's spoken English. This transcript is from an automatic speech-to-text engine and may contain phonetic spellings (e.g., "b to b" for "B2B"), transcription errors, and missing punctuation. Your goal is to identify and correct grammatical errors while being mindful of the spoken nature of the text.
 
-**Instructions:**
-1.  **Focus only on the user's sentences.** Do not correct the agent's speech.
-2.  **Identify clear grammatical mistakes**, such as incorrect verb tenses, subject-verb agreement, or wrong prepositions.
-3.  **Crucially, identify words that are used incorrectly in the given context.** For example, using the verb "doing" when "studying" is appropriate for a field of study.
-4.  **Do NOT correct simple punctuation** or capitalization unless it fundamentally changes the meaning of a sentence.
-5.  **Do NOT correct incomplete sentences or natural conversational pauses.** Ignore sentence fragments that are common in spoken language.
-6.  For each error, provide the 'actual' text and the 'corrected' version. In the 'actual' text, wrap the specific incorrect word(s) with '<wrong>' tags. In the 'corrected' text, wrap the replacement word(s) with '<corrected>' tags. Also, provide a brief 'explanation'.
+**Analysis Guidelines:**
+1.  **It's a Transcript, Not Writing:** Assume that phonetic spellings like "b to b," "for you," or "see see" are transcription variants of "B2B," "4U," or "CC." Use the conversation context to interpret these correctly. Your goal is to fix grammar, not transcription style. If "b to b" is used where "B2B" is grammatically correct, fix the surrounding grammar (e.g., add an article) but treat the core phrase as correct.
+2.  **Focus on Core Grammar Errors:** Prioritize corrections for:
+    *   **Articles (a, an, the):** Insert missing articles or correct wrong ones.
+    *   **Verb Tenses & Agreement:** Fix incorrect verb forms (e.g., "he go" -> "he goes").
+    *   **Prepositions:** Correct wrong prepositions (e.g., "arrive to the city" -> "arrive in the city").
+    *   **Word Choice:** Correct words that are grammatically incorrect in the context (e.g., "I'm doing history" -> "I'm studying history").
+3.  **Be Conservative:** Do NOT correct:
+    *   Natural conversational fillers ("umm", "like", "you know").
+    *   Sentence fragments or incomplete thoughts that are common in speech.
+    *   Punctuation or capitalization, unless it critically changes the sentence's meaning.
+4.  **Output Format:**
+    *   Provide a list of corrections.
+    *   For each correction, give the 'actual' sentence fragment with the error.
+    *   Wrap the specific incorrect word(s) within the 'actual' text with \`<wrong>\` tags. Be as specific as possible.
+    *   Provide the 'corrected' version with the fixed word(s) wrapped in \`<corrected>\` tags.
+    *   Provide a concise 'explanation'.
 
-**Example of a correction object:**
+**Good Example (Handling ASR and Grammar):**
+*User's transcript says:* "I work for b to b company that sells software."
+*Full conversation reveals they work in tech.*
+
+*Your Output:*
+\`\`\`json
 {
   "corrections": [
     {
-      "actual": "I <wrong>does</wrong> not known",
-      "corrected": "I <corrected>did</corrected> not know",
-      "explanation": "The verb 'does' should be 'did' in the past tense."
-    },
-    {
-      "actual": "I'm <wrong>doing</wrong> engineering.",
-      "corrected": "I'm <corrected>studying</corrected> engineering.",
-      "explanation": "The verb 'doing' is incorrect in this context. 'Studying' is the appropriate verb to use when referring to pursuing a field of study."
+      "actual": "I work for <wrong>b to b</wrong> company",
+      "corrected": "I work for <corrected>a B2B</corrected> company",
+      "explanation": "The article 'a' is needed before 'B2B company'. 'B2B' is the standard written form for 'b to b' in a business context."
     }
   ]
 }
+\`\`\`
 
-If no significant grammar errors are found, return an empty corrections array.
+**Another Good Example (Word Choice):**
+*User's transcript says:* "I am doing politics at university."
+
+*Your Output:*
+\`\`\`json
+{
+  "corrections": [
+    {
+      "actual": "I am <wrong>doing</wrong> politics",
+      "corrected": "I am <corrected>studying</corrected> politics",
+      "explanation": "When referring to an academic subject at a university, the verb 'studying' is more appropriate than 'doing'."
+    }
+  ]
+}
+\`\`\`
+
+If no significant errors are found, return an empty \`corrections\` array.
 
 **Full Conversation Context:**
 ---
@@ -68,7 +95,7 @@ ${userTranscript}
     model: openai('gpt-4o'),
     schema: GrammarCorrectionSchema,
     system:
-      'You are an expert English tutor specializing in grammar correction and language assessment.',
+      'You are an expert English tutor specializing in grammar correction of transcribed speech.',
     prompt,
   });
 
