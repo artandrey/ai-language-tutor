@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { AgentAvatar } from '@/components/voice/agent-avatar';
 
 export default function VoiceSkipPage() {
   return (
@@ -13,8 +14,8 @@ export default function VoiceSkipPage() {
           Whenever you're ready, you'll find this option in the app.
         </p>
         <div className="flex flex-col items-center mb-8">
-          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-4 shadow-lg">
-            <span className="text-5xl">🧑‍🎤</span>
+          <div className="mb-4">
+            <AgentAvatar size={112} />
           </div>
           <div className="text-blue-600 font-semibold">Let's talk later!</div>
         </div>

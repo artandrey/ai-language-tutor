@@ -403,7 +403,7 @@ export const sampleQuestions: Question[] = [
   {
     id: '18',
     type: 'filler',
-    title: 'Evaluating your vocabulary skills',
+    title: '',
     filler: <VocabularyLoadingFiller />,
     hideContinueButton: true,
     hideBackButton: true,
@@ -411,7 +411,7 @@ export const sampleQuestions: Question[] = [
   {
     id: '19',
     type: 'filler',
-    title: 'Your Vocabulary Level',
+    title: '',
     filler: <VocabularyStatsFiller />,
     hideBackButton: true,
   },

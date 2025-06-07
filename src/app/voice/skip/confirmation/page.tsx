@@ -1,17 +1,22 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { AgentAvatar } from '@/components/voice/agent-avatar';
 
 export default function VoiceSkipConfirmationPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 p-4">
-      <div className="bg-gray-900/90 rounded-3xl shadow-2xl max-w-lg w-full p-10 text-center">
-        <h1 className="text-2xl font-bold text-white mb-4">You're all set!</h1>
-        <p className="text-gray-300 mb-8">
-          You can always take the English assessment later from your dashboard.
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl max-w-lg w-full p-10 text-center border border-gray-200/50">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          You're all set!
+        </h1>
+        <p className="text-gray-600 mb-8">
+          You can always take the{' '}
+          <span className="text-blue-600">English assessment</span> later from
+          your dashboard.
         </p>
         <div className="flex flex-col items-center mb-8">
-          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center mb-4">
-            <span className="text-5xl">🧑‍🎤</span>
+          <div className="mb-4">
+            <AgentAvatar size={112} />
           </div>
         </div>
         <Link

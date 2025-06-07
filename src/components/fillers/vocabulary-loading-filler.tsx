@@ -34,7 +34,7 @@ export function VocabularyLoadingFiller() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-8">
-      <h2 className="text-2xl font-bold text-white mb-6 text-center">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
         Evaluating your vocabulary skills
       </h2>
       <div className="flex flex-col items-center mb-8">
@@ -47,7 +47,7 @@ export function VocabularyLoadingFiller() {
               cx="60"
               cy="60"
               r="54"
-              stroke="#23263a"
+              stroke="#e5e7eb"
               strokeWidth="12"
               fill="none"
             />
@@ -63,26 +63,26 @@ export function VocabularyLoadingFiller() {
               strokeLinecap="round"
             />
           </svg>
-          <span className="text-4xl font-bold text-white z-10">
+          <span className="text-4xl font-bold text-gray-900 z-10">
             {Math.round(displayProgress * 100)}%
           </span>
         </div>
-        <div className="text-gray-300 text-lg">
+        <div className="text-gray-600 text-lg">
           Evaluating your word selection versatility
         </div>
       </div>
-      <div className="rounded-2xl p-4 mt-8 w-full max-w-xl mx-auto shadow-lg">
-        <div className="text-gray-100 mb-2">
+      <div className="bg-white/60 border border-gray-200/50 rounded-2xl p-4 mt-8 w-full max-w-xl mx-auto shadow-sm">
+        <div className="text-gray-700 mb-2">
           Your product is freaking amazing! I finally found something perfect
           for me to enhance my advanced English to the next level. Stellar work
           to you all!
         </div>
-        <div className="flex items-center justify-between text-gray-400 text-xs">
+        <div className="flex items-center justify-between text-gray-500 text-xs">
           <div>
             <div>Maria Olimova</div>
             <div>Product manager</div>
           </div>
-          <div className="flex gap-0.5 text-blue-400 text-lg">{'★★★★★'}</div>
+          <div className="flex gap-0.5 text-blue-500 text-lg">{'★★★★★'}</div>
         </div>
       </div>
     </div>

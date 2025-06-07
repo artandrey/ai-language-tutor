@@ -87,6 +87,21 @@ export async function POST(request: NextRequest) {
 
   if (event === 'call.ended') {
     try {
+      // Check if processing is already completed for this call
+      const existingCall = await db
+        .select()
+        .from(calls)
+        .where(eq(calls.ultravoxSessionId, ultravoxCallId))
+        .limit(1);
+
+      if (
+        existingCall.length > 0 &&
+        existingCall[0].isPostProcessingCompleted
+      ) {
+        console.log(`Call ${ultravoxCallId} already processed, returning 204`);
+        return new Response(null, { status: 204 });
+      }
+
       const messages = await fetchMessages(ultravoxCallId);
       let corrections = null;
       let vocabulary = null;

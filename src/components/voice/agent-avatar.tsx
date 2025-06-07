@@ -1,11 +1,11 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface AgentAvatarProps {
   size?: number;
 }
 
 export const AgentAvatar: React.FC<AgentAvatarProps> = ({ size = 72 }) => {
-  // Replace the emoji with an image or SVG if you have a branded agent avatar
   return (
     <div
       style={{
@@ -17,9 +17,20 @@ export const AgentAvatar: React.FC<AgentAvatarProps> = ({ size = 72 }) => {
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
+        padding: 4, // Small padding to create a border effect
       }}
     >
-      <span style={{ fontSize: size * 0.6, lineHeight: 1 }}>🧑‍🎤</span>
+      <Image
+        src="/ai-generated-avatar.png"
+        alt="AI English Tutor Avatar"
+        width={size - 8}
+        height={size - 8}
+        style={{
+          borderRadius: '50%',
+          objectFit: 'cover',
+        }}
+        priority
+      />
     </div>
   );
 };
