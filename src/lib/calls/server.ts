@@ -14,19 +14,11 @@ export interface CallCreationResult {
 export async function getExistingCall(userId: string) {
   try {
     const db = getDatabase();
-
     const existingCalls = await db
       .select()
       .from(calls)
-      .where(
-        and(
-          eq(calls.userId, userId),
-          eq(calls.isActive, true),
-          eq(calls.status, 'pending')
-        )
-      )
+      .where(eq(calls.userId, userId))
       .limit(1);
-
     return existingCalls.length > 0 ? existingCalls[0] : null;
   } catch (error) {
     console.error('Failed to get existing call:', error);
@@ -81,7 +73,6 @@ export async function getOrCreateCall(
   userId: string
 ): Promise<CallCreationResult> {
   const existingCall = await getExistingCall(userId);
-
   if (existingCall && existingCall.ultravoxSessionId) {
     return {
       callId: existingCall.id,
@@ -90,11 +81,9 @@ export async function getOrCreateCall(
       ultravoxCallId: existingCall.ultravoxSessionId,
     };
   }
-
-  // Create new call if none exists
+  // If no call exists, create one
   console.log('No existing call found, creating new call');
   const { callId, joinUrl, ultravoxCallId } = await createNewCall(userId);
-
   return {
     callId,
     joinUrl,

@@ -1,7 +1,17 @@
 import { useEffect, useState, useCallback } from 'react';
 import { UltravoxSession } from 'ultravox-client';
 
-export function useUltravoxCall(joinUrl: string) {
+const ACTIVE_STATUSES = ['listening', 'thinking', 'speaking'];
+const END_STATUSES = ['disconnected', 'disconnecting'];
+
+interface UseUltravoxCallOptions {
+  onCallEnd?: () => void;
+}
+
+export function useUltravoxCall(
+  joinUrl: string,
+  options?: UseUltravoxCallOptions
+) {
   const [ultravoxSession, setUltravoxSession] =
     useState<UltravoxSession | null>(null);
   const [currentAgentTranscript, setCurrentAgentTranscript] = useState('');
@@ -19,14 +29,24 @@ export function useUltravoxCall(joinUrl: string) {
       }
     };
     session.addEventListener('transcripts', handleTranscripts);
-    session.addEventListener('callStarted', () => {
-      setCallStarted(true);
-    });
+
+    const handleStatus = () => {
+      if (ACTIVE_STATUSES.includes(session.status)) {
+        setCallStarted(true);
+      }
+      if (END_STATUSES.includes(session.status)) {
+        if (options?.onCallEnd) {
+          options.onCallEnd();
+        }
+      }
+    };
+    session.addEventListener('status', handleStatus);
+
     return () => {
       session.removeEventListener('transcripts', handleTranscripts);
-      session.removeEventListener('callStarted', () => {});
+      session.removeEventListener('status', handleStatus);
     };
-  }, []);
+  }, [options]);
 
   const joinCall = useCallback(() => {
     ultravoxSession?.joinCall(joinUrl);
