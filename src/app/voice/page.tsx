@@ -23,55 +23,64 @@ export default function VoiceInitPage() {
           A 4-minute conversation will help us understand your strengths and
           create the right learning path for you.
         </p>
-        <div className="flex flex-col items-center mb-8">
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-6 w-full max-w-xs mb-4 shadow-lg">
-            <div className="flex justify-center gap-2 mb-2">
-              <span className="bg-blue-600 text-white rounded-full px-3 py-1 text-xs font-semibold">
+
+        {/* Redesigned Stats Preview */}
+        <div className="mb-8">
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 shadow-lg">
+            {/* Level Badges */}
+            <div className="flex justify-center gap-1 mb-4">
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
                 A1
               </span>
-              <span className="bg-blue-500 text-white rounded-full px-3 py-1 text-xs font-semibold">
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
                 A2
               </span>
-              <span className="bg-blue-400 text-white rounded-full px-3 py-1 text-xs font-semibold">
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
                 B1
               </span>
-              <span className="bg-blue-300 text-white rounded-full px-3 py-1 text-xs font-semibold border-2 border-white">
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-bold border-2 border-white">
                 B2
               </span>
-              <span className="bg-purple-500 text-white rounded-full px-3 py-1 text-xs font-semibold">
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
                 C1
               </span>
-              <span className="bg-purple-700 text-white rounded-full px-3 py-1 text-xs font-semibold">
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
                 C2
               </span>
             </div>
-            <div className="text-white text-lg font-semibold mb-2">
-              Upper-Intermediate <span className="text-blue-100">B2</span>
+
+            {/* Current Level */}
+            <div className="text-white mb-6">
+              <div className="text-xl font-bold mb-1">Upper-Intermediate</div>
+              <div className="text-blue-100 text-sm">Your estimated level</div>
             </div>
-            <div className="flex justify-center gap-4 text-xs text-blue-100">
-              <div>
-                <div className="font-bold text-lg">85%</div>
-                <div>Pronunciation</div>
+
+            {/* Skills Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">85%</div>
+                <div className="text-gray-600 text-xs">Pronunciation</div>
               </div>
-              <div>
-                <div className="font-bold text-lg">75%</div>
-                <div>Filler Words</div>
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">75%</div>
+                <div className="text-gray-600 text-xs">Grammar</div>
               </div>
-              <div>
-                <div className="font-bold text-lg">65%</div>
-                <div>Vocabulary</div>
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">65%</div>
+                <div className="text-gray-600 text-xs">Vocabulary</div>
               </div>
-              <div>
-                <div className="font-bold text-lg">70%</div>
-                <div>Grammar</div>
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">70%</div>
+                <div className="text-gray-600 text-xs">Fluency</div>
               </div>
-              <div>
-                <div className="font-bold text-lg">45%</div>
-                <div>Fluency</div>
-              </div>
+            </div>
+
+            <div className="mt-4 text-blue-100 text-xs">
+              ✨ Sample assessment results
             </div>
           </div>
         </div>
+
         <Link
           href="/voice/accept"
           className="block"
