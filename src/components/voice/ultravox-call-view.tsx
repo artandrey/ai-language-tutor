@@ -32,12 +32,16 @@ export default function UltravoxCallView({
     setCountdownComplete(true);
     setCallEnded(true);
     endCall();
+    // Redirect to results page
+    router.push('/voice/results');
   };
 
   // End call when hang up is pressed
   const handleEndCall = () => {
     setCallEnded(true);
     endCall();
+    // Redirect to results page
+    router.push('/voice/results');
   };
 
   // Handle skip for now (redirect to quiz or another page)
@@ -45,7 +49,7 @@ export default function UltravoxCallView({
     router.replace('/voice/skip');
   };
 
-  // If call ended, show a simple message (customize as needed)
+  // If call ended, redirect will happen automatically
   if (callEnded || countdownComplete) {
     return (
       <div
@@ -53,7 +57,7 @@ export default function UltravoxCallView({
         style={{ background: 'transparent' }}
       >
         <div className="text-white text-lg font-semibold">
-          Call ended. Thank you!
+          Redirecting to results...
         </div>
       </div>
     );
