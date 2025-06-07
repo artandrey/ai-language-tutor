@@ -2,6 +2,12 @@
 
 import { useUltravoxCall } from '@/lib/ultravox/hooks/use-ultravox-call';
 import { TranscriptView } from './transcript-view';
+import { AgentAvatar } from './AgentAvatar';
+import { CallCountdown } from './CallCountdown';
+import { Button } from '@/components/ui/button';
+import { Captions, PhoneOff, Mic } from 'lucide-react';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
 interface UltravoxCallInterfaceProps {
   callId: string;
@@ -16,16 +22,141 @@ export default function UltravoxCallView({
 }: UltravoxCallInterfaceProps) {
   const { currentAgentTranscript, joinCall, endCall } =
     useUltravoxCall(joinUrl);
+  const [showSubtitles, setShowSubtitles] = React.useState(false);
+  const [callEnded, setCallEnded] = React.useState(false);
+  const [countdownComplete, setCountdownComplete] = React.useState(false);
+  const [callStarted, setCallStarted] = React.useState(false);
+  const router = useRouter();
 
+  // Only join call after user clicks Start Call
+  React.useEffect(() => {
+    if (callStarted) {
+      joinCall();
+    }
+    // eslint-disable-next-line
+  }, [callStarted]);
+
+  // End call when countdown completes
+  const handleCountdownComplete = () => {
+    setCountdownComplete(true);
+    setCallEnded(true);
+    endCall();
+  };
+
+  // End call when hang up is pressed
+  const handleEndCall = () => {
+    setCallEnded(true);
+    endCall();
+  };
+
+  // Handle skip for now (redirect to quiz or another page)
+  const handleSkip = () => {
+    router.replace('/voice/skip');
+  };
+
+  // If call ended, show a simple message (customize as needed)
+  if (callEnded || countdownComplete) {
+    return (
+      <div
+        className="flex flex-col items-center justify-center min-h-screen w-full p-4"
+        style={{ background: 'transparent' }}
+      >
+        <div className="text-white text-lg font-semibold">
+          Call ended. Thank you!
+        </div>
+      </div>
+    );
+  }
+
+  // Pre-start screen
+  if (!callStarted) {
+    return (
+      <div
+        className="flex flex-col items-center justify-center min-h-screen w-full p-4"
+        style={{ background: 'transparent' }}
+      >
+        <div className="flex flex-col items-center w-full max-w-xs mx-auto gap-8">
+          {/* Timer at the top */}
+          <CallCountdown
+            staticTime={2 * 60 * 1000}
+            size={120}
+          />
+          <div className="text-center text-white text-base font-medium">
+            2 minutes call with AI tutor to assess your English and identify key
+            growth areas
+          </div>
+          <div className="flex flex-row gap-4 w-full">
+            <Button
+              variant="outline"
+              className="flex-1 py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg border border-gray-300 text-gray-900 bg-white hover:bg-gray-100"
+              onClick={handleSkip}
+              style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04)' }}
+            >
+              Skip for now
+            </Button>
+            <Button
+              className="flex-1 py-6 px-6 rounded-2xl font-semibold text-lg shadow-lg flex items-center justify-center gap-2 text-white"
+              style={{
+                background: 'linear-gradient(145deg, #3b82f6, #1d4ed8)',
+                boxShadow:
+                  'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
+              }}
+              onClick={() => setCallStarted(true)}
+            >
+              <Mic size={20} /> <span>Start Call</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // In-call UI
   return (
-    <div>
-      UltravoxCallInterface
-      <p>Call ID: {callId}</p>
-      <p>Ultravox Call ID: {ultravoxCallId}</p>
-      <p>Join URL: {joinUrl}</p>
-      <button onClick={joinCall}>Join Call</button>
-      <button onClick={endCall}>End Call</button>
-      <TranscriptView transcript={currentAgentTranscript} />
+    <div
+      className="flex flex-col items-center justify-center min-h-screen w-full p-4"
+      style={{ background: 'transparent' }}
+    >
+      <div className="flex flex-col items-center w-full max-w-xs mx-auto gap-6">
+        <div className="flex flex-row items-center w-full justify-between">
+          <div />
+          <button
+            aria-label="Toggle subtitles"
+            className={`p-2 rounded-lg transition-all duration-200 ${
+              showSubtitles ? 'bg-blue-600/20' : 'bg-transparent'
+            } text-white`}
+            onClick={() => setShowSubtitles((v) => !v)}
+            type="button"
+          >
+            <Captions size={28} />
+          </button>
+        </div>
+        <AgentAvatar size={88} />
+        <div className="text-center">
+          <div className="text-lg font-semibold text-white">
+            Assessment Call with Stacy
+          </div>
+        </div>
+        <CallCountdown
+          duration={2 * 60 * 1000}
+          onComplete={handleCountdownComplete}
+          size={120}
+        />
+        {showSubtitles && (
+          <div className="w-full">
+            <TranscriptView transcript={currentAgentTranscript} />
+          </div>
+        )}
+        <Button
+          variant="destructive"
+          size="icon"
+          className="mt-4"
+          aria-label="End call"
+          onClick={handleEndCall}
+        >
+          <PhoneOff size={32} />
+        </Button>
+      </div>
     </div>
   );
 }
