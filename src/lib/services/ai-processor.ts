@@ -92,7 +92,7 @@ ${userTranscript}
 ---`;
 
   const result = await generateObject({
-    model: openai('gpt-4o'),
+    model: openai('gpt-4.1'),
     schema: GrammarCorrectionSchema,
     system:
       'You are an expert English tutor specializing in grammar correction of transcribed speech.',
@@ -154,7 +154,7 @@ ${userTranscript}
 ---`;
 
   const result = await generateObject({
-    model: openai('gpt-4o'),
+    model: openai('gpt-4.1'),
     schema: VocabularyEnhancementSchema,
     system:
       'You are an expert English tutor specializing in vocabulary enhancement and CEFR level assessment.',
