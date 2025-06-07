@@ -91,6 +91,7 @@ export async function POST(request: NextRequest) {
       let corrections = null;
       let vocabulary = null;
       let transcriptForDb: string | null = null;
+      let usersSpeechDuration: number | null = null;
 
       if (messages && messages.length > 0) {
         const fullConversation = messages
@@ -148,6 +149,25 @@ export async function POST(request: NextRequest) {
         } else {
           console.log(`No transcript found for call ${ultravoxCallId}`);
         }
+
+        // Calculate user's total speech duration
+        usersSpeechDuration = messages
+          .filter(
+            (msg) =>
+              msg.role === 'MESSAGE_ROLE_USER' &&
+              msg.timespan &&
+              typeof msg.timespan.start === 'string' &&
+              typeof msg.timespan.end === 'string'
+          )
+          .reduce((sum, msg) => {
+            const start = parseFloat(msg.timespan!.start!);
+            const end = parseFloat(msg.timespan!.end!);
+            if (!isNaN(start) && !isNaN(end) && end > start) {
+              return sum + (end - start);
+            }
+            return sum;
+          }, 0);
+        usersSpeechDuration = Math.round(usersSpeechDuration); // seconds
       }
 
       const callData = data.call as {
@@ -177,6 +197,7 @@ export async function POST(request: NextRequest) {
           isActive: false,
           status: 'completed',
           updatedAt: new Date(),
+          usersSpeechDuration,
         })
         .where(eq(calls.ultravoxSessionId, ultravoxCallId));
 

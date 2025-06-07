@@ -1,0 +1,1 @@
+ALTER TABLE "calls" ALTER COLUMN "users_speech_duration" SET DATA TYPE integer;

@@ -6,6 +6,7 @@ import {
   timestamp,
   boolean,
   unique,
+  integer,
 } from 'drizzle-orm/pg-core';
 
 // Voice calls table with integrated session tracking
@@ -46,6 +47,9 @@ export const calls = pgTable(
     isPostProcessingCompleted: boolean('is_post_processing_completed').default(
       false
     ),
+
+    // New: User's total speech duration in seconds
+    usersSpeechDuration: integer('users_speech_duration'),
 
     // Timestamps
     callStartedAt: timestamp('call_started_at'),
