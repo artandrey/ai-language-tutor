@@ -162,7 +162,7 @@ export default function UltravoxCallView({
 
   // In-call UI
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 to-white p-3 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-200/20 to-blue-50/10" />
@@ -174,38 +174,62 @@ export default function UltravoxCallView({
         />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center w-full max-w-md mx-auto">
-        {/* Header with CC Toggle */}
-        <div className="flex justify-between items-center w-full mb-8">
-          <div></div>
-          <button
-            aria-label="Toggle captions"
-            className={`relative p-3 rounded-xl transition-all duration-300 shadow-lg ${
-              showSubtitles
-                ? 'bg-blue-500 text-white shadow-blue-500/25'
-                : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white shadow-gray-200/50'
-            } border border-gray-200/50`}
-            onClick={() => setShowSubtitles((v) => !v)}
-            type="button"
-          >
-            <Captions size={24} />
-            {showSubtitles && (
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></div>
-            )}
-          </button>
+      {/* Floating CC Toggle Button - Top Right */}
+      <button
+        aria-label="Toggle captions"
+        className={`fixed top-4 right-4 z-20 p-2.5 rounded-full transition-all duration-300 shadow-lg ${
+          showSubtitles
+            ? 'bg-blue-500 text-white shadow-blue-500/25'
+            : 'bg-white/90 backdrop-blur-sm text-gray-700 hover:bg-white shadow-gray-200/50'
+        } border border-gray-200/50`}
+        onClick={() => setShowSubtitles((v) => !v)}
+        type="button"
+      >
+        <Captions size={20} />
+        {showSubtitles && (
+          <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white"></div>
+        )}
+      </button>
+
+      {/* Compact Transcript - Fixed at top when enabled */}
+      {showSubtitles && (
+        <div className="fixed top-16 left-3 right-3 z-10">
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-gray-200/50 max-h-20 overflow-hidden">
+            <div className="flex items-start gap-2">
+              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+              <div className="min-h-[16px] flex-1">
+                {currentAgentTranscript && (
+                  <p
+                    className="text-gray-800 text-sm leading-tight overflow-hidden"
+                    style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                  >
+                    {currentAgentTranscript}
+                  </p>
+                )}
+              </div>
+              {currentAgentTranscript && (
+                <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse flex-shrink-0 mt-2"></div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content - Centered */}
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full max-w-sm mx-auto">
+        {/* Avatar */}
+        <div className="mb-4">
+          <AgentAvatar size={120} />
         </div>
 
-        {/* Large Avatar */}
-        <div className="mb-6">
-          <AgentAvatar size={140} />
-        </div>
-
-        {/* Agent Info */}
-        <div className="text-center mb-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">
-            Assessment Call with Stacy
-          </h2>
-          <p className="text-gray-600">AI English Tutor</p>
+        {/* Minimal Agent Info */}
+        <div className="text-center mb-6">
+          <h2 className="text-lg font-bold text-gray-900">Stacy</h2>
+          <p className="text-sm text-gray-600">AI English Tutor</p>
         </div>
 
         {/* Timer */}
@@ -213,27 +237,18 @@ export default function UltravoxCallView({
           <CallCountdown
             duration={2 * 60 * 1000}
             onComplete={handleCountdownComplete}
-            size={120}
+            size={100}
           />
         </div>
-
-        {/* Transcript */}
-        {showSubtitles && (
-          <div className="w-full mb-8">
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
-              <TranscriptView transcript={currentAgentTranscript} />
-            </div>
-          </div>
-        )}
 
         {/* End Call Button */}
         <Button
           variant="destructive"
-          className="w-16 h-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-red-500 hover:bg-red-600"
+          className="w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 bg-red-500 hover:bg-red-600"
           aria-label="End call"
           onClick={handleEndCall}
         >
-          <PhoneOff size={24} />
+          <PhoneOff size={20} />
         </Button>
       </div>
     </div>
