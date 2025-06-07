@@ -244,7 +244,7 @@ export async function POST(request: NextRequest) {
   return new Response('OK');
 }
 
-export async function verifyWebhookSignature(
+async function verifyWebhookSignature(
   request: NextRequest,
   requestBody: string
 ): Promise<boolean> {

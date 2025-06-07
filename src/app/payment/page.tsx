@@ -5,7 +5,7 @@ import { VoiceMetricsSummary } from '@/components/metrics/VoiceMetricsSummary';
 import { useCallPolling } from '@/hooks/useCallPolling';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import posthog from 'posthog-js';
 
 const plans = [
@@ -20,7 +20,7 @@ const plans = [
   { name: '52-Week Plan', price: 89.99, perDay: '0.25', original: 179.98 },
 ];
 
-export default function PaymentPage() {
+function PaymentContent() {
   const [selected, setSelected] = useState(1);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -194,5 +194,13 @@ export default function PaymentPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PaymentPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentContent />
+    </Suspense>
   );
 }

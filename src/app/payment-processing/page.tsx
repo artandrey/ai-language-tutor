@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import posthog from 'posthog-js';
 
-export default function PaymentProcessingPage() {
+function PaymentProcessingContent() {
   const searchParams = useSearchParams();
   const plan = searchParams.get('plan');
   useEffect(() => {
@@ -22,5 +22,13 @@ export default function PaymentProcessingPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function PaymentProcessingPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentProcessingContent />
+    </Suspense>
   );
 }
