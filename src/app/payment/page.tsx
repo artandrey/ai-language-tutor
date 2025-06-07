@@ -2,6 +2,7 @@
 
 import { VocabularyStatsSummary } from '@/components/metrics/VocabularyStatsSummary';
 import { VoiceMetricsSummary } from '@/components/metrics/VoiceMetricsSummary';
+import { Loader } from '@/components/ui/loader';
 import { useCallPolling } from '@/hooks/useCallPolling';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -199,7 +200,7 @@ function PaymentContent() {
 
 export default function PaymentPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <PaymentContent />
     </Suspense>
   );

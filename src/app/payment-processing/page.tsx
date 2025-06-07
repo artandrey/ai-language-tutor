@@ -2,6 +2,7 @@
 
 import React, { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Loader } from '@/components/ui/loader';
 import posthog from 'posthog-js';
 
 function PaymentProcessingContent() {
@@ -27,7 +28,7 @@ function PaymentProcessingContent() {
 
 export default function PaymentProcessingPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <PaymentProcessingContent />
     </Suspense>
   );
