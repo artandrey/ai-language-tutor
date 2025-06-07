@@ -481,7 +481,7 @@ export function CallResults({ call }: CallResultsProps) {
                           }}
                           whileTap={{ scale: 0.95 }}
                           transition={{ duration: 0.1, ease: 'easeInOut' }}
-                          onClick={() => router.push('/payment?type=voice')}
+                          onClick={() => router.replace('/payment?type=voice')}
                         >
                           <div
                             className="absolute inset-0 rounded-2xl"

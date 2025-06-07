@@ -29,7 +29,7 @@ export default function EmailForm() {
       setServerError(result.errors.email[0]);
       return;
     }
-    router.push('/quiz');
+    router.replace('/quiz');
   }
 
   return (

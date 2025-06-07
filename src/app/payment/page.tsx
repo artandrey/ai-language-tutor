@@ -132,7 +132,7 @@ function PaymentContent() {
             <button
               className="mt-6 w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 text-white font-bold text-lg shadow-lg hover:from-blue-600 hover:to-blue-500 transition"
               onClick={() =>
-                router.push(
+                router.replace(
                   `/payment-processing?plan=${encodeURIComponent(
                     plans[selected].name
                   )}`
