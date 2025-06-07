@@ -4,11 +4,9 @@ import { Button } from '@/components/ui/button';
 import { AgentAvatar } from '@/components/voice/agent-avatar';
 import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
-import { useState } from 'react';
 
 export default function VoiceSkipConfirmationPage() {
   const router = useRouter();
-  const [isNavigating, setIsNavigating] = useState(false);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4">
@@ -33,21 +31,10 @@ export default function VoiceSkipConfirmationPage() {
             boxShadow:
               'inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 12px rgba(59, 130, 246, 0.3)',
           }}
-          loading={isNavigating}
-          disabled={isNavigating}
-          onClick={async () => {
-            setIsNavigating(true);
-            router.replace('/quiz?q=15');
-          }}
+          onClick={() => router.replace('/quiz?q=15')}
         >
-          {isNavigating ? (
-            'Loading...'
-          ) : (
-            <>
-              <ArrowRight size={20} />
-              Continue with Questions
-            </>
-          )}
+          <ArrowRight size={20} />
+          Continue with Questions
         </Button>
       </div>
     </div>

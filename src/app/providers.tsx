@@ -4,21 +4,10 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 import { usePostHog } from 'posthog-js/react';
-import { useRouter } from 'next/navigation';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 
 import posthog from 'posthog-js';
 import { PostHogProvider as PHProvider } from 'posthog-js/react';
 import { AnalyticsEvents } from '@/lib/analytics/events';
-
-// Configure NProgress
-NProgress.configure({
-  showSpinner: false,
-  minimum: 0.3,
-  easing: 'ease',
-  speed: 500,
-});
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -33,49 +22,9 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
   return (
     <PHProvider client={posthog}>
       <SuspendedPostHogPageView />
-      <NavigationProgress />
       {children}
     </PHProvider>
   );
-}
-
-function NavigationProgress() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    NProgress.done();
-  }, [pathname, searchParams]);
-
-  useEffect(() => {
-    const handleStart = () => NProgress.start();
-    const handleComplete = () => NProgress.done();
-
-    // Listen to navigation events
-    const originalPush = window.history.pushState;
-    const originalReplace = window.history.replaceState;
-
-    window.history.pushState = function (...args) {
-      handleStart();
-      return originalPush.apply(this, args);
-    };
-
-    window.history.replaceState = function (...args) {
-      handleStart();
-      return originalReplace.apply(this, args);
-    };
-
-    // Listen to popstate (back/forward buttons)
-    window.addEventListener('popstate', handleStart);
-
-    return () => {
-      window.history.pushState = originalPush;
-      window.history.replaceState = originalReplace;
-      window.removeEventListener('popstate', handleStart);
-    };
-  }, []);
-
-  return null;
 }
 
 function PostHogPageView() {
