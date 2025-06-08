@@ -7,7 +7,7 @@ import { useCallPolling } from '@/hooks/useCallPolling';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
-import posthog from 'posthog-js';
+import { useAnalytics } from '@/lib/analytics/hooks';
 import { AnalyticsEvents } from '@/lib/analytics/events';
 import { Button } from '@/components/ui/button';
 
@@ -28,6 +28,7 @@ function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
+  const { trackEvent } = useAnalytics();
 
   // For voice metrics
   const {
@@ -37,8 +38,8 @@ function PaymentContent() {
   } = useCallPolling();
 
   useEffect(() => {
-    posthog.capture(AnalyticsEvents.USER_OPENED_PAYMENT_PAGE, { type });
-  }, [type]);
+    trackEvent(AnalyticsEvents.USER_OPENED_PAYMENT_PAGE, { type });
+  }, [type, trackEvent]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4">

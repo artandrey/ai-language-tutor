@@ -3,15 +3,17 @@
 import React, { useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Loader } from '@/components/ui/loader';
-import posthog from 'posthog-js';
+import { useAnalytics } from '@/lib/analytics/hooks';
 import { AnalyticsEvents } from '@/lib/analytics/events';
 
 function PaymentProcessingContent() {
   const searchParams = useSearchParams();
   const plan = searchParams.get('plan');
+  const { trackEvent } = useAnalytics();
+
   useEffect(() => {
-    posthog.capture(AnalyticsEvents.USER_INITIALIZED_PAYMENT, { plan });
-  }, [plan]);
+    trackEvent(AnalyticsEvents.USER_INITIALIZED_PAYMENT, { plan });
+  }, [plan, trackEvent]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#0a1837] to-[#1a1037] p-4">

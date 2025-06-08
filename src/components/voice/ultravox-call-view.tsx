@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Captions, PhoneOff, Mic, Loader2 } from 'lucide-react';
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import posthog from 'posthog-js';
+import { useAnalytics } from '@/lib/analytics/hooks';
 import { AnalyticsEvents } from '@/lib/analytics/events';
 
 interface UltravoxCallInterfaceProps {
@@ -29,10 +29,11 @@ export default function UltravoxCallView({
   const [countdownComplete, setCountdownComplete] = React.useState(false);
   const [isStartingCall, setIsStartingCall] = React.useState(false);
   const router = useRouter();
+  const { trackEvent } = useAnalytics();
 
   // End call when countdown completes
   const handleCountdownComplete = async () => {
-    posthog.capture(AnalyticsEvents.USER_ENDED_CONVERSATION_BY_TIMEOUT);
+    trackEvent(AnalyticsEvents.USER_ENDED_CONVERSATION_BY_TIMEOUT);
     setCountdownComplete(true);
     setCallEnded(true);
     await wait(2000);
@@ -41,7 +42,7 @@ export default function UltravoxCallView({
 
   // End call when hang up is pressed
   const handleEndCall = async () => {
-    posthog.capture(AnalyticsEvents.USER_ENDED_CONVERSATION_BY_THEMSELF);
+    trackEvent(AnalyticsEvents.USER_ENDED_CONVERSATION_BY_THEMSELF);
     setCallEnded(true);
     endCall();
     await wait(2000);
@@ -56,7 +57,7 @@ export default function UltravoxCallView({
   // Handle start call with loading state
   const handleStartCall = async () => {
     setIsStartingCall(true);
-    posthog.capture(AnalyticsEvents.USER_STARTED_CONVERSATION);
+    trackEvent(AnalyticsEvents.USER_STARTED_CONVERSATION);
     try {
       await joinCall();
     } finally {

@@ -8,7 +8,7 @@ import { Filler } from './filler';
 import { MultipleChoice } from './multiple-choice';
 import { ProgressBar } from './progress-bar';
 import { SingleChoice } from './single-choice';
-import posthog from 'posthog-js';
+import { useAnalytics } from '@/lib/analytics/hooks';
 import { useEffect } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { AnalyticsEvents } from '@/lib/analytics/events';
@@ -21,19 +21,20 @@ export const QuizContainer = () => {
   const searchParams = useSearchParams();
   const q = Number(searchParams.get('q') || 1);
   const currentQuestionIndex = q - 1;
+  const { trackEvent } = useAnalytics();
 
   const currentQuestion = questions[currentQuestionIndex];
 
   useEffect(() => {
-    posthog.capture(AnalyticsEvents.QUIZ_STARTED);
-  }, []);
+    trackEvent(AnalyticsEvents.QUIZ_STARTED);
+  }, [trackEvent]);
 
   // Fire user_started_test event when reaching question 15 (vocabulary test)
   useEffect(() => {
     if (currentQuestion?.id === '15') {
-      posthog.capture(AnalyticsEvents.USER_STARTED_TEST);
+      trackEvent(AnalyticsEvents.USER_STARTED_TEST);
     }
-  }, [currentQuestion?.id]);
+  }, [currentQuestion?.id, trackEvent]);
 
   if (!currentQuestion) {
     return (

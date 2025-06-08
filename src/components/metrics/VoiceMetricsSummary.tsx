@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useEffect } from 'react';
-import posthog from 'posthog-js';
+import { useAnalytics } from '@/lib/analytics/hooks';
 import { AnalyticsEvents } from '@/lib/analytics/events';
 
 interface VoiceMetricsSummaryProps {
@@ -22,19 +24,19 @@ interface VoiceMetricsSummaryProps {
   };
 }
 
-function formatDuration(seconds: number | null) {
-  if (!seconds) return '0 mins';
+function formatDuration(seconds: number | null): string {
+  if (!seconds) return '0:00';
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
-  if (mins === 0) return `${secs} secs`;
-  if (secs === 0) return `${mins} mins`;
-  return `${mins} mins ${secs} secs`;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
 export function VoiceMetricsSummary({ call }: VoiceMetricsSummaryProps) {
+  const { trackEvent } = useAnalytics();
+
   useEffect(() => {
-    posthog.capture(AnalyticsEvents.USER_VIEWED_VOICE_SUMMARY);
-  }, []);
+    trackEvent(AnalyticsEvents.USER_VIEWED_VOICE_SUMMARY);
+  }, [trackEvent]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto mb-8">

@@ -7,12 +7,14 @@ import { emailSchema, EmailFormData } from './schema';
 import { saveUserEmail } from './actions';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { trackEvent, AnalyticsEvents } from '@/lib/analytics/events';
+import { useAnalytics } from '@/lib/analytics/hooks';
+import { AnalyticsEvents } from '@/lib/analytics/events';
 import { ArrowRight } from 'lucide-react';
 
 export default function EmailForm() {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
+  const { trackEvent } = useAnalytics();
 
   const {
     register,

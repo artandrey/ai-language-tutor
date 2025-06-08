@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { useQuizStore } from '@/store/quiz';
-import posthog from 'posthog-js';
+import { useAnalytics } from '@/lib/analytics/hooks';
 import {
   getVocabularyStats,
   LEVELS,
@@ -11,10 +13,11 @@ import { AnalyticsEvents } from '@/lib/analytics/events';
 export function VocabularyStatsSummary() {
   const { answers, questions } = useQuizStore();
   const stats = getVocabularyStats(answers, questions);
+  const { trackEvent } = useAnalytics();
 
   useEffect(() => {
-    posthog.capture(AnalyticsEvents.USER_PASSED_LANGUAGE_TEST);
-  }, []);
+    trackEvent(AnalyticsEvents.USER_PASSED_LANGUAGE_TEST);
+  }, [trackEvent]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[300px] p-3 sm:p-8 w-full">

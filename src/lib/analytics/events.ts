@@ -1,4 +1,23 @@
-import posthog from 'posthog-js';
+/**
+ * Analytics Events Configuration
+ *
+ * This file defines all PostHog analytics events for the application.
+ *
+ * IMPORTANT: CLIENT-SIDE ONLY TRACKING
+ * ====================================
+ * All PostHog events in this application are sent ONLY from the client side.
+ * This ensures:
+ * - No server-side event tracking
+ * - Better performance (no server-side PostHog calls)
+ * - Proper user privacy controls
+ * - Consistent event attribution
+ *
+ * Usage Guidelines:
+ * - Use the `useAnalytics()` hook in client components for event tracking
+ * - The `trackEvent()` helper function includes client-side safety checks
+ * - Never import `posthog-js` directly in components - use the hook instead
+ * - All components that track events must be client components ('use client')
+ */
 
 export enum AnalyticsEvents {
   // Quiz events
@@ -26,11 +45,20 @@ export enum AnalyticsEvents {
 }
 
 /**
- * Type-safe analytics tracking helper
+ * Type-safe analytics tracking helper that only works on the client side
+ * This ensures no PostHog events are sent from the server
+ *
+ * @deprecated Use the `useAnalytics()` hook instead for better type safety and React integration
  */
 export const trackEvent = (
   event: AnalyticsEvents,
   properties?: Record<string, any>
 ) => {
-  posthog.capture(event, properties);
+  // Only track events on the client side
+  if (typeof window !== 'undefined') {
+    // Dynamically import posthog only on client side
+    import('posthog-js').then((posthog) => {
+      posthog.default.capture(event, properties);
+    });
+  }
 };
