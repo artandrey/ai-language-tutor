@@ -28,6 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          rel="icon"
+          href="/icon.png"
+          type="image/png"
+        />
         <Script
           id="fb-pixel-base"
           strategy="afterInteractive"
