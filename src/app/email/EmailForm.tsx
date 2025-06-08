@@ -32,7 +32,6 @@ export default function EmailForm() {
       return;
     }
     trackEvent(AnalyticsEvents.EMAIL_ENTERED, { email: data.email });
-    router.replace('/voice');
   }
 
   return (

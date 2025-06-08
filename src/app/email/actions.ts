@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import { getDatabase } from '@/lib/db';
 import { userEmails } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import { redirect } from 'next/navigation';
+import { redirect, RedirectType } from 'next/navigation';
 import { emailSchema } from './schema';
 
 export async function saveUserEmail(prevState: any, formData: FormData) {
@@ -47,5 +47,5 @@ export async function saveUserEmail(prevState: any, formData: FormData) {
     });
   }
 
-  redirect('/quiz');
+  redirect('/voice', RedirectType.replace);
 }
