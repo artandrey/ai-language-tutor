@@ -5,12 +5,12 @@ export default function QuizLoading() {
         {/* Progress bar skeleton */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-8 h-8 bg-gray-300 rounded-full animate-pulse"></div>
-            <div className="w-16 h-4 bg-gray-300 rounded animate-pulse"></div>
+            <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+            <div className="w-16 h-4 bg-gray-200 rounded animate-pulse"></div>
           </div>
-          <div className="w-full h-2 bg-gray-200 rounded-full">
+          <div className="w-full h-2 bg-gray-100 rounded-full">
             <div
-              className="h-2 bg-blue-300 rounded-full animate-pulse"
+              className="h-2 bg-gradient-to-r from-blue-100 to-blue-200 rounded-full animate-pulse"
               style={{ width: '20%' }}
             ></div>
           </div>
@@ -20,8 +20,8 @@ export default function QuizLoading() {
         <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/20">
           {/* Question title skeleton */}
           <div className="mb-6">
-            <div className="h-6 bg-gray-300 rounded animate-pulse mb-2"></div>
-            <div className="h-6 bg-gray-300 rounded animate-pulse w-3/4"></div>
+            <div className="h-6 bg-gray-200 rounded animate-pulse mb-2"></div>
+            <div className="h-6 bg-gray-200 rounded animate-pulse w-3/4"></div>
           </div>
 
           {/* Answer options skeleton */}
@@ -29,13 +29,13 @@ export default function QuizLoading() {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-12 bg-gray-200 rounded-xl animate-pulse"
+                className="h-12 bg-gray-100 rounded-xl animate-pulse"
               ></div>
             ))}
           </div>
 
           {/* Continue button skeleton */}
-          <div className="h-12 bg-gray-300 rounded-xl animate-pulse"></div>
+          <div className="h-12 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl animate-pulse"></div>
         </div>
       </div>
     </div>

@@ -7,32 +7,32 @@ export default function EmailLoading() {
           <div className="text-left">
             {/* Header skeleton */}
             <div className="mb-8">
-              <div className="h-8 bg-gray-300 rounded animate-pulse mb-2"></div>
-              <div className="h-6 bg-gray-200 rounded animate-pulse w-3/4 mb-8"></div>
+              <div className="h-8 bg-gray-200 rounded animate-pulse mb-2"></div>
+              <div className="h-6 bg-gray-100 rounded animate-pulse w-3/4 mb-8"></div>
             </div>
 
             {/* Form skeleton */}
             <div className="space-y-6 mb-8">
               {/* Email label skeleton */}
               <div>
-                <div className="h-5 bg-gray-300 rounded animate-pulse mb-2 w-32"></div>
+                <div className="h-5 bg-gray-200 rounded animate-pulse mb-2 w-32"></div>
                 {/* Email input skeleton */}
                 <div className="h-12 bg-white/80 rounded-xl animate-pulse border border-gray-300 shadow-sm"></div>
               </div>
 
               {/* Submit button skeleton */}
-              <div className="h-16 bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl animate-pulse shadow-lg"></div>
+              <div className="h-16 bg-gradient-to-r from-gray-100 to-gray-200 rounded-2xl animate-pulse shadow-lg"></div>
             </div>
 
             {/* Security disclaimers skeleton */}
             <div className="space-y-4">
               <div className="flex items-center gap-3 p-3 rounded-lg border border-blue-200 bg-blue-50/50">
-                <div className="w-5 h-5 bg-blue-300 rounded animate-pulse"></div>
-                <div className="h-4 bg-blue-200 rounded animate-pulse flex-1"></div>
+                <div className="w-5 h-5 bg-blue-100 rounded animate-pulse"></div>
+                <div className="h-4 bg-blue-100 rounded animate-pulse flex-1"></div>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-lg border border-blue-200 bg-blue-50/50">
-                <div className="w-5 h-5 bg-blue-300 rounded animate-pulse"></div>
-                <div className="h-4 bg-blue-200 rounded animate-pulse flex-1"></div>
+                <div className="w-5 h-5 bg-blue-100 rounded animate-pulse"></div>
+                <div className="h-4 bg-blue-100 rounded animate-pulse flex-1"></div>
               </div>
             </div>
           </div>
