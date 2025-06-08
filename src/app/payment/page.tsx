@@ -10,6 +10,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useAnalytics } from '@/lib/analytics/hooks';
 import { AnalyticsEvents } from '@/lib/analytics/events';
 import { Button } from '@/components/ui/button';
+import FacebookPixelPageView from '@/components/FacebookPixelPageView';
 
 const plans = [
   { name: '1-Week Plan', price: 9.99, perDay: '1.43', original: null },
@@ -203,8 +204,11 @@ function PaymentContent() {
 
 export default function PaymentPage() {
   return (
-    <Suspense fallback={<Loader />}>
-      <PaymentContent />
-    </Suspense>
+    <>
+      <FacebookPixelPageView />
+      <Suspense fallback={<Loader />}>
+        <PaymentContent />
+      </Suspense>
+    </>
   );
 }
