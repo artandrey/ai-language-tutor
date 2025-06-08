@@ -272,7 +272,7 @@ export default function UltravoxCallView({
 
         {/* Minimal Agent Info */}
         <div className="text-center mb-6">
-          <h2 className="text-lg font-bold text-gray-900">Alex</h2>
+          <h2 className="text-lg font-bold text-gray-900">Alexis</h2>
           <p className="text-sm text-gray-600">AI English Tutor</p>
         </div>
 
