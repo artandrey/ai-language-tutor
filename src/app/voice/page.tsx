@@ -1,23 +1,30 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Mic } from 'lucide-react';
+import { Mic, ArrowRight } from 'lucide-react';
 import VoiceStartButton from '@/components/ui/voice-start-button';
 
 export default function VoiceInitPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4">
       <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl max-w-lg w-full p-10 text-center relative border border-gray-200/50">
-        <Link
-          href="/voice/skip"
-          className="block mb-4"
-        >
-          <Button
-            variant="ghost"
-            className="w-full text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-          >
-            Skip Assessment for Now
-          </Button>
-        </Link>
+        {/* Top right skip button using flex */}
+        <div className="flex w-full mb-4">
+          <div className="ml-auto">
+            <Link href="/voice/skip">
+              <Button
+                variant="ghost"
+                className="flex items-center gap-1 text-blue-600 hover:text-blue-800 bg-transparent shadow-none px-0 py-0 h-auto text-base font-semibold"
+                style={{ boxShadow: 'none' }}
+              >
+                Skip
+                <ArrowRight
+                  size={18}
+                  className="ml-1"
+                />
+              </Button>
+            </Link>
+          </div>
+        </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           Let's analyze your <span className="text-blue-600">English</span>
         </h1>
