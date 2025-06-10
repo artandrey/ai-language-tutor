@@ -36,3 +36,25 @@ export async function signOut() {
     redirect('/error');
   }
 }
+
+export async function ensureUserAndRedirectToVoiceAccept() {
+  const supabase = await createClient();
+
+  // Check if user exists
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (!user || error) {
+    // If no user, create anonymous user
+    const { error: signInError } = await supabase.auth.signInAnonymously();
+    if (signInError) {
+      console.error('Failed to create anonymous session:', signInError);
+      redirect('/error');
+    }
+  }
+
+  // Redirect to /voice/accept after ensuring user exists
+  redirect('/voice/accept');
+}

@@ -106,7 +106,7 @@ export default function UltravoxCallView({
               Let's analyze your English
             </h1>
             <p className="text-gray-600 text-sm sm:text-lg leading-relaxed">
-              A 4-minute conversation will help us understand your strengths and
+              A 2-minute conversation will help us understand your strengths and
               create the right learning path for you.
             </p>
           </div>

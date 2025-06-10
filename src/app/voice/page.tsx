@@ -22,7 +22,7 @@ export default function VoiceInitPage() {
           Let's analyze your <span className="text-blue-600">English</span>
         </h1>
         <p className="text-gray-600 mb-8">
-          A 4-minute conversation will help us understand your strengths and
+          A 2-minute conversation will help us understand your strengths and
           create the right learning path for you.
         </p>
 
