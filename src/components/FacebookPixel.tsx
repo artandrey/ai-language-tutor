@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const FacebookPixelPageView = () => {
+export const FacebookPixelPageView = () => {
   useEffect(() => {
     if (typeof window.fbq === 'function') {
       window.fbq('track', 'PageView');
@@ -16,4 +16,11 @@ const FacebookPixelPageView = () => {
   return null;
 };
 
-export default FacebookPixelPageView;
+export const FacebookPixelPaymentPageOpened = () => {
+  useEffect(() => {
+    if (typeof window.fbq === 'function') {
+      window.fbq('trackCustom', 'PaymentPageOpened');
+    }
+  }, []);
+  return null;
+};
