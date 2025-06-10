@@ -1,28 +1,97 @@
-import { createAnonymousSession } from '@/lib/auth/actions';
-import { GradientBackground } from '@/components/ui/gradient-background';
-import { CenteredCard } from '@/components/ui/centered-card';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import HomeStartButton from '@/components/ui/home-start-button';
+import { Mic, ArrowRight } from 'lucide-react';
+import VoiceStartButton from '@/components/ui/voice-start-button';
 
-export default function Home() {
+export default function VoiceInitPage() {
   return (
-    <GradientBackground>
-      <div className="flex flex-1 items-center justify-center min-h-screen">
-        <CenteredCard className="p-12 md:p-16">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 md:mb-10">
-            Welcome to your{' '}
-            <span className="text-blue-600">AI English Tutor!</span>
-          </h1>
-          <p className="text-gray-600 mb-12 md:mb-14 text-base md:text-lg">
-            Let&apos;s personalize your learning journey in just a few quick
-            questions.
-            <br />
-            This will help me create the perfect learning plan just for you!
-          </p>
-          <HomeStartButton />
-        </CenteredCard>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white p-4">
+      <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl max-w-lg w-full p-10 text-center relative border border-gray-200/50">
+        {/* Top right skip button using flex */}
+        <div className="flex w-full mb-4">
+          <div className="ml-auto">
+            <Link href="/voice/skip">
+              <Button
+                variant="ghost"
+                className="flex items-center gap-1 text-blue-600 hover:text-blue-800 bg-transparent shadow-none px-0 py-0 h-auto text-base font-semibold"
+                style={{ boxShadow: 'none' }}
+              >
+                Skip
+                <ArrowRight
+                  size={18}
+                  className="ml-1"
+                />
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          Let's analyze your <span className="text-blue-600">English</span>
+        </h1>
+        <p className="text-gray-600 mb-8">
+          A 2-minute conversation will help us understand your strengths and
+          create the right learning path for you.
+        </p>
+
+        {/* Redesigned Stats Preview */}
+        <div className="mb-8">
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 shadow-lg">
+            {/* Level Badges */}
+            <div className="flex justify-center gap-1 mb-4">
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
+                A1
+              </span>
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
+                A2
+              </span>
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
+                B1
+              </span>
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-bold border-2 border-white">
+                B2
+              </span>
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
+                C1
+              </span>
+              <span className="bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-medium">
+                C2
+              </span>
+            </div>
+
+            {/* Current Level */}
+            <div className="text-white mb-6">
+              <div className="text-xl font-bold mb-1">Upper-Intermediate</div>
+              <div className="text-blue-100 text-sm">Your estimated level</div>
+            </div>
+
+            {/* Skills Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">85%</div>
+                <div className="text-gray-600 text-xs">Pronunciation</div>
+              </div>
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">75%</div>
+                <div className="text-gray-600 text-xs">Grammar</div>
+              </div>
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">65%</div>
+                <div className="text-gray-600 text-xs">Vocabulary</div>
+              </div>
+              <div className="bg-white rounded-xl p-3 shadow-sm">
+                <div className="text-blue-600 font-bold text-lg">70%</div>
+                <div className="text-gray-600 text-xs">Fluency</div>
+              </div>
+            </div>
+
+            <div className="mt-4 text-blue-100 text-xs">
+              ✨ Sample assessment results
+            </div>
+          </div>
+        </div>
+
+        <VoiceStartButton />
       </div>
-    </GradientBackground>
+    </div>
   );
 }
